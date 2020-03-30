@@ -1,55 +1,59 @@
+#!/usr/bin/env node  
+    // indicates that processing should be carried out NodeJS
 
+// npm link --force - add to cmd
+// where-is - run
+  
 const commander = require('commander'),
 { prompt } = require('inquirer'),
 chalk = require('chalk'),
 fs = require('fs')
 
-commander.version('1.0.0').description('Configuration files creator.')
+const childProcess = require('child_process');
 
-commander
-.command('create <name>')
-.option('--extension <value>', 'File extension')
-.alias('c')
-.description('Create new configuration file.')
-.action((name, cmd) => {
-  if (cmd.extension && !['json', 'txt', 'cfg'].includes(cmd.extension)) {
-    console.log(chalk.red('\nExtension is not allowed.'))
-  } else {
-    prompt([
-      {
-        type: 'input',
-        name: 'charset',
-        message: 'Charset: '
-      },
-      { type: 'input', name: 'max_ram_usage', message: 'Max RAM usage, Mb: ' },
-      { type: 'input', name: 'max_cpu_usage', message: 'Max CPU usage, %: ' },
-      { type: 'input', name: 'check_updates_interval', message: 'Updates interval, ms: ' },
-      { type: 'input', name: 'processes_count', message: 'Processes count: ' }
-    ]).then(options => {
-      if (cmd.extension && cmd.extension === 'json') {
-        fs.writeFileSync(`files/${name}.${cmd.extension}`, JSON.stringify(options))
-      } else {
-        let data = ''
-        for (let item in options) data += `${item}=${options[item]} \n`
+commander.version('1.0.0').description('Files finder from current path.')  // Util name and description
+// where-is --version
+// where-is --help
 
-        fs.writeFileSync(`files/${name}.cfg`, data)
-      }
-      console.log(chalk.green(`\nFile "${name}.${cmd.extension || 'cfg'}" created.`))
+let get_files = (start_path, fname) => {
+    let results = []
+    let file_list = fs.readdirSync(start_path)
+    file_list.forEach((file) => {
+        file_path = start_path + "\\" + file 
+        let file_stat = fs.statSync(file_path) 
+        if (file_stat && file_stat.isDirectory()) {
+            // Find in this dir
+            results = results.concat(get_files(file_path, fname))
+        } else {
+            file_name = file_path.toString().split('\\').pop()
+            entries = file_name.split(fname).length - 1 // Number of entries
+            if (entries > 0) {
+                results.push(file_path)
+            }
+        }
     })
-  }
-})
+    return results
+}
 
 commander
-.command('all')
-.alias('a')
-.description('Show all configuration files.')
-.action(() => {
-  const files = fs.readdirSync('files')
+  .command('find <fname>')  // command name with props name 
+  .description('Search for a file from the current path.')
+  .alias('f')  // short name of command
+  .option('--help', 'finc')
+  .action((fname, cmd) => {  // some action
+        var path = childProcess.execSync('echo %CD%').toString();  // Take current path
+        path = path.replace(/[\n, \r]/g, '')  // Remove other signs
+        fname = fname.toString().replace(/[\n, \r]/g, '')
+        console.log(`Results from path: ${path}`)
+        files = get_files(path, fname)
+        if (files.length > 0) {
+            console.log(chalk.bgCyan(`Found ${files.length} element(s).`))
+            for (file in files) {
+                console.log(chalk.green(`${files[file]}`))
+            }
+        } else {
+            console.log(chalk.redBright('Nothing'))
+        }
+  })
 
-  let data = ''
-  for (let file of files) data += `${file} \n`
-
-  console.log(chalk.grey(`\nConfiguration files: \n\n${data}`))
-})
-
-commander.parse(process.argv)
+commander.parse(process.argv)  // Take Array of string for parsing

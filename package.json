@@ -1,5 +1,9 @@
 {
-    "name": "cfg",
+    "name": "where-is",
     "preferGlobal": true,
-    "bin": "./app.js"
+    "bin": "./app.js",
+    "dependencies": {
+        "commander": "^5.0.0",
+        "inquirer": "^7.1.0"
+    }
 }
