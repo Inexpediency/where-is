@@ -8,7 +8,7 @@ Chalk - npm i chalk -g
   
 ---
 
-[![Badge](https://img.shields.io/badge/Made_with-Node.js-green.svg?style=flat-square)](1)
+[![Badge](https://img.shields.io/badge/Uses-Node.js-green.svg?style=flat-square)](1)
 [![Badge](https://img.shields.io/badge/Open-Source-important.svg?style=flat-square)](1)
 [![Badge](https://img.shields.io/badge/Made_with-Love-ff69b4.svg?style=flat-square)](1)
     
@@ -17,7 +17,7 @@ Chalk - npm i chalk -g
 </div>
 
 # Install
--   install [Node.js](https://nodejs.org/en/) 
+-   install [node.js](https://nodejs.org/en/) 
 -   clone this repo: `git clone https://github.com/Ythosa/where-is`
 -   install dependences by writing in console: `npm install`
 -   setup module by writing in console: `npm link --force`
@@ -26,4 +26,4 @@ Chalk - npm i chalk -g
 ---
 
 # Description
--    CLIhttps://img.shields.io/badge/1-1-green.svg
+-    CLI
