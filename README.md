@@ -1,8 +1,3 @@
-dependences:
-Commander - npm i commander -g
-Inquirer - npm i inquirer -g
-Chalk - npm i chalk -g
-
 <h1 align="center">Where-Is?</h1>
 <div align="center">
   
