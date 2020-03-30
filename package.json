@@ -1,0 +1,5 @@
+{
+    "name": "cfg",
+    "preferGlobal": true,
+    "bin": "./app.js"
+}
