@@ -8,19 +8,22 @@ Chalk - npm i chalk -g
   
 ---
 
-https://img.shields.io/badge/<LABEL>-<MESSAGE>-<COLOR>
+[![Badge](https://img.shields.io/badge/Made_with-Node.js-green.svg?style=flat-square)](1)
+[![Badge](https://img.shields.io/badge/Open-Source-important.svg?style=flat-square)](1)
+[![Badge](https://img.shields.io/badge/Made_with-Love-ff69b4.svg?style=flat-square)](1)
     
 ---
 
 </div>
 
 # Install
--   clone this repo: `git clone https://github.com/Ythosa/MoneyRain`
--   run: `index.html`
--   click: `start`
+-   install [Node.js](https://nodejs.org/en/) 
+-   clone this repo: `git clone https://github.com/Ythosa/where-is`
+-   install dependences by writing in console: `npm install`
+-   setup module by writing in console: `npm link --force`
+-   done, you can use it from your `cmd`
 
 ---
 
 # Description
--    Browser game for PC
--    If game isn't working change scale xd
+-    CLIhttps://img.shields.io/badge/1-1-green.svg
