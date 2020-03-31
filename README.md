@@ -21,4 +21,5 @@
 ---
 
 # Description
--    CLI
+-    CLI to finding files
+-    **Important** - `where-is` can't find files in close/private/system folders
