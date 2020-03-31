@@ -17,6 +17,7 @@
 -   install dependences by writing in console: `npm install`
 -   setup module by writing in console: `npm link --force`
 -   done, you can use it from your `cmd`
+-   write in cmd: `wis help`
 
 ---
 
