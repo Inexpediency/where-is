@@ -60,6 +60,8 @@ class FindFile {
         /* Find all currect files */
         // Colors supported chalk module
 
+        const max_file_list_length = 30
+
         let capitalizeFirstLetter = (string) => {
             return string.charAt(0).toUpperCase() + string.slice(1);
         }
@@ -68,9 +70,9 @@ class FindFile {
         path = path.replace(/[\n, \r]/g, '')  // Remove other signs
         fname = fname.toString().replace(/[\n, \r]/g, '')
 
-        console.log(chalk.greenBright(`Results from path:`, chalk.inverse(` ${path} `)))
+        console.log(chalk.greenBright(`\nResults from path:`, chalk.inverse(` ${path} `)))
         let files = FindFile.get_files(path, fname)
-        if (files.length > 25) {
+        if (files.length > FindFile.max_file_list_length) {
             console.log(chalk.redBright('\nTry to specify the file name more precisely.\nToo many files found.',
             chalk.inverse(` ${files.length} `)))
         } else if (files.length > 0) {
@@ -99,7 +101,7 @@ class FindFile {
                 if (current_color >= arr_of_colors.length) current_color = 0
             }
         } else {
-            console.log(chalk.redBright('No files were found with the same name.'))
+            console.log(chalk.redBright('\nNo files were found with the same name.'))
         }
     }
 }
