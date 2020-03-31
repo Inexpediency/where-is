@@ -62,6 +62,8 @@ class FindFile {
 
         const max_file_list_length = 30
 
+        const arr_of_colors = ['cyan', 'magenta', 'yellow']
+
         let capitalizeFirstLetter = (string) => {
             return string.charAt(0).toUpperCase() + string.slice(1);
         }
@@ -88,20 +90,43 @@ class FindFile {
                 chalk.greenBright('element.\n'))
             }
             
-            let arr_of_colors = ['cyan', 'red', 'yellow', 'blue', 'magenta', 'green'] 
-            let current_color = Math.floor(Math.random() * (arr_of_colors.length + 1))
+            let path_division = (path, file, current_color) => {
+                path = path.split('\\')
 
+                // bgColor from Color
+                let bgColor = 'bg' + capitalizeFirstLetter(arr_of_colors[Number(current_color)])
+                let bgColorBright = bgColor + 'Bright'
+
+                // Path index 0, 1, 2, 3
+                let f_index_pos = String(Number(file) + 1)
+                if (f_index_pos.length == 1) 
+                    f_index_pos = '0' + f_index_pos
+
+                process.stdout.write(chalk[bgColorBright](chalk.black(f_index_pos + '.'))+' ')
+                for (let p in path) {
+                    let f_path = path[p]
+                    let pos = f_path.indexOf(fname)
+                    if (pos != -1) {
+                        process.stdout.write(chalk[arr_of_colors[current_color]](f_path.slice(0, pos)))
+                        process.stdout.write(chalk[bgColorBright](chalk.black(f_path.slice(pos, pos + fname.length))))
+                        process.stdout.write(chalk[arr_of_colors[current_color]](f_path.slice(pos + fname.length)+'\\'))
+                    } else {
+                        process.stdout.write(chalk[arr_of_colors[current_color]](f_path + '\\'))
+                    }
+                }
+                console.log()
+            }
+
+            let current_color = Math.floor(Math.random() * (arr_of_colors.length))
             for (let file in files) {
-                let bgColor = 'bg' + capitalizeFirstLetter(arr_of_colors[current_color])
-                let pos = String(Number(file) + 1)
-                if (pos.length == 1) pos = '0' + pos
-                console.log(chalk[bgColor](chalk.black(`${pos}.`)),
-                    chalk[arr_of_colors[current_color]](`${files[file]}`))
+                let path = files[file]
+                path_division(path, file, current_color)  // Console.log path with matching
                 current_color++
                 if (current_color >= arr_of_colors.length) current_color = 0
             }
+            console.log('\n')
         } else {
-            console.log(chalk.redBright('\nNo files were found with the same name.'))
+            console.log(chalk.redBright('\nNo files were found with similar name.'))
         }
     }
 }
