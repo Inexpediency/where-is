@@ -1,9 +1,33 @@
 {
-    "name": "where-is",
-    "preferGlobal": true,
-    "bin": "./app.js",
-    "dependencies": {
-        "commander": "^5.0.0",
-        "inquirer": "^7.1.0"
-    }
+  "name": "file-where-is",
+  "preferGlobal": true,
+  "bin": {
+    "wis": "app.js"
+  },
+  "dependencies": {
+    "commander": "^5.0.0",
+    "inquirer": "^7.1.0"
+  },
+  "description": "WheRe IS?!",
+  "version": "1.0.1",
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "file-where-is"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ythosa/where-is.git"
+  },
+  "keywords": [
+    "where",
+    "is",
+    "file"
+  ],
+  "author": "Ythosa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Ythosa/where-is/issues"
+  },
+  "homepage": "https://github.com/Ythosa/where-is#readme"
 }
