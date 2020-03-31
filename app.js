@@ -16,6 +16,9 @@ commander.version('1.0.0').description('Files finder from current path.')  // Ut
 // where-is --help
 
 class FindFile {
+
+    max_file_list_length = 30
+
     static save_chache(file_list) {
         /* Save last founded file_list */
         file_list = JSON.stringify(file_list)
@@ -28,7 +31,7 @@ class FindFile {
         file_list = JSON.parse(file_list)
     }
 
-    static get_files(start_path, fname) {
+    static get_files(start_path, fname, strict_finding_mode) {
         /* Get files in this dir */
         let results = []
         let file_list = []
@@ -44,10 +47,16 @@ class FindFile {
                 let file_stat = fs.statSync(file_path) 
                 if (file_stat && file_stat.isDirectory()) {
                     // Find in this dir
-                    results = results.concat(FindFile.get_files(file_path, fname))
+                    results = results.concat(FindFile.get_files(file_path, fname, strict_finding_mode))
                 } else {
-                    let file_name = file_path.toString().split('\\').pop().toLowerCase()
-                    let entries = file_name.split(fname.toLowerCase()).length - 1 // Number of entries
+                    let entries = 0
+                    if (strict_finding_mode) {
+                        let file_name = file_path.toString().split('\\').pop()
+                        entries = file_name.split(fname).length - 1 // Number of entries
+                    } else {
+                        let file_name = file_path.toString().split('\\').pop().toLowerCase()
+                        entries = file_name.split(fname.toLowerCase()).length - 1 // Number of entries
+                    }
                     if (entries > 0) {
                         results.push(file_path)
                     }
@@ -56,11 +65,9 @@ class FindFile {
         return results  // Array of file's paths
     }
 
-    static find(fname) { 
+    static find(fname, strict_finding_mode) { 
         /* Find all currect files */
         // Colors supported chalk module
-
-        const max_file_list_length = 30
 
         const arr_of_colors = ['cyan', 'magenta', 'yellow']
 
@@ -73,7 +80,7 @@ class FindFile {
         fname = fname.toString().replace(/[\n, \r]/g, '')
 
         console.log(chalk.greenBright(`\nResults from path:`, chalk.inverse(` ${path} `)))
-        let files = FindFile.get_files(path, fname)
+        let files = FindFile.get_files(path, fname, strict_finding_mode)
         if (files.length > FindFile.max_file_list_length) {
             console.log(chalk.redBright('\nTry to specify the file name more precisely.\nToo many files found.',
             chalk.inverse(` ${files.length} `)))
@@ -126,7 +133,7 @@ class FindFile {
             }
             console.log('\n')
         } else {
-            console.log(chalk.redBright('\nNo files were found with similar name.'))
+            console.log(chalk.redBright('\nNo files were found with similar name.\n'))
         }
     }
 }
@@ -136,8 +143,14 @@ commander
     .description('Search for a file from the current path.')
     .option('--strict', 'Strict finding')
     .alias('f')  // Short name of command
-    .action((fname, cmd) => { // Action 
-            FindFile.find(fname)
+    .action((fname, cmd) => { // Action
+            let strict_finding_mode = false
+            if (cmd.strict) {
+                strict_finding_mode = true
+                FindFile.find(fname, strict_finding_mode)
+            } else {
+                FindFile.find(fname.toLowerCase(), strict_finding_mode)
+            }
     })
 
 commander
