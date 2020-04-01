@@ -5,13 +5,15 @@ const fs = require('fs')
 class FileFinder {
         
     constructor() {
-        this.max_file_list_length = 30
-        this.data_list = []
-        this.arr_of_colors = ['cyan', 'magenta', 'yellow']
-        this.data_list = {
+        this.max_file_list_length = 30  // Max length of finded file list
+        this.arr_of_colors = ['cyan', 'magenta', 'yellow']  // Colors supported chalk module
+        this.data_list = {  // Data format
             file_list_has_updated : false,
             file_list: null
         }
+        this.need_regex = false
+        this.regex = ""
+        this.strict_finding_mode = false
     }
 
     get_data() {
@@ -29,6 +31,10 @@ class FileFinder {
 
     get_files(start_path, fname, strict_finding_mode) {
         /* Get files in this dir */
+        this.need_regex = false
+        if (fname.split('*').length > 1) {
+            this.need_regex = true
+        }
         let results = []
         let file_list = []
         try {
@@ -37,6 +43,7 @@ class FileFinder {
         catch(err) {
             file_list = null
         }
+        // Recursive walk in dirs
         if (file_list != null)
             file_list.forEach((file) => {
                 let file_path = start_path + "\\" + file 
@@ -45,23 +52,44 @@ class FileFinder {
                     // Find in this dir
                     results = results.concat(this.get_files(file_path, fname, strict_finding_mode))
                 } else {
-                    let entries = 0
-                    if (strict_finding_mode) {
-                        let file_name = file_path.toString().split('\\').pop()
-                        entries = file_name.split(fname).length - 1 // Number of entries
+                    if (!this.need_regex) {
+                        let entries = 0
+                        if (strict_finding_mode) {
+                            let file_name = file_path.toString().split('\\').pop()
+                            entries = file_name.split(fname).length - 1 // Number of entries
+                        } else {
+                            let file_name = file_path.toString().split('\\').pop().toLowerCase()
+                            entries = file_name.split(fname.toLowerCase()).length - 1 // Number of entries
+                        }
+                        if (entries > 0) {
+                            results.push(file_path)
+                        }
                     } else {
-                        let file_name = file_path.toString().split('\\').pop().toLowerCase()
-                        entries = file_name.split(fname.toLowerCase()).length - 1 // Number of entries
+                        let valid_re_str = ""
+                        let file_name = ""
+                        if (strict_finding_mode) {
+                            file_name = file_path.split('\\').pop()
+                            valid_re_str = fname.split('*')[0] + '[a-zA-Z0-9_]*'
+                            if (fname.split('*').length > 1) 
+                                valid_re_str += fname.split('*')[1]
+                        } else {
+                            file_name = file_path.toString().split('\\').pop()
+                            valid_re_str = fname.split('*')[0].toLowerCase() + '[a-zA-Z0-9_]*' + fname.split('*')[1].toLowerCase()
+                        }
+                        let re = new RegExp(valid_re_str)
+                        this.regex = re
+                        if (re.test(file_path)) {
+                            results.push(file_path)
+                        }
                     }
-                    if (entries > 0) {
-                        results.push(file_path)
-                    }
+                        
                 }
             })
         return results  // Array of file's paths
     }
 
     capitalizeFirstLetter(string) {
+        /* Capitalizing string */
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
@@ -70,7 +98,7 @@ class FileFinder {
     }
 
     path_division(fname, path, fpos, current_color) {
-        path = path.split('\\')
+        /* Output file paths in correct format */
 
         // bgColor from Color
         let bgColor = 'bg' + this.capitalizeFirstLetter(this.arr_of_colors[Number(current_color)])
@@ -82,23 +110,37 @@ class FileFinder {
             f_index_pos = '0' + f_index_pos
 
         process.stdout.write(chalk[bgColorBright](chalk.black(f_index_pos + '.'))+' ')
-        for (let p in path) {
-            let f_path = path[p]
-            let pos = f_path.indexOf(fname)
-            if (pos != -1) {
-                process.stdout.write(chalk[this.arr_of_colors[current_color]](f_path.slice(0, pos)))
-                process.stdout.write(chalk[bgColorBright](chalk.black(f_path.slice(pos, pos + fname.length))))
-                process.stdout.write(chalk[this.arr_of_colors[current_color]](f_path.slice(pos + fname.length)+'\\'))
+            let path_file = path.split('\\').pop()
+            let path_folders = path.split('\\').slice(0, path.split('\\').length - 1)
+            path_folders.forEach((folder) => {
+                process.stdout.write(chalk[this.arr_of_colors[current_color]](folder + '\\'))
+            })
+            let re = null
+            if (!this.need_regex)
+                re = RegExp(fname)
+            else 
+                re = this.regex
+            let similarity = null
+            let path_wo_sim = null
+            if (this.strict_finding_mode) {
+                similarity = re.exec(path_file)[0]
+                path_wo_sim = path_file.split(similarity)
             } else {
-                process.stdout.write(chalk[this.arr_of_colors[current_color]](f_path + '\\'))
+                similarity = re.exec(path_file.toLowerCase())[0]
+                path_wo_sim = path_file.toLowerCase().split(similarity.toLowerCase())
             }
-        }
+            process.stdout.write(chalk[this.arr_of_colors[current_color]](path_wo_sim[0]))
+            process.stdout.write(chalk[bgColorBright](chalk.black(similarity)))
+            if (path_wo_sim.length > 1)
+                process.stdout.write(chalk[this.arr_of_colors[current_color]](path_wo_sim[1]))
+            process.stdout.write(" ")              
         console.log()
     }
 
     find(fname, strict_finding_mode) { 
         /* Find all currect files */
-        // Colors supported chalk module
+
+        if (strict_finding_mode) this.strict_finding_mode = true
 
         let path = childProcess.execSync('echo %CD%').toString();  // Take current path
         path = path.replace(/[\n, \r]/g, '')  // Remove other signs
@@ -111,7 +153,9 @@ class FileFinder {
         if (files.length > this.max_file_list_length) {
             console.log(chalk.redBright('\nTry to specify the file name more precisely.\nToo many files found.',
             chalk.inverse(` ${files.length} `)))
+
             this.print_blank_line()
+
             this.data_list.file_list = null
             this.data_list.file_list_has_updated = false
         } else if (files.length > 0) {
@@ -130,6 +174,7 @@ class FileFinder {
                 chalk.inverse(` ${files.length} `)),
                 chalk.greenBright('element.'))
             }
+
             this.print_blank_line()
             console.log('')
 
@@ -147,12 +192,12 @@ class FileFinder {
             this.data_list.file_list_has_updated = false
             this.print_blank_line()
         }
-        this.set_data(this.data_list)
+        this.set_data(this.data_list)  // Update data file
         console.log()
     }
 
     goto_path(id) {
-        // Goto some path
+        /* Goto some path */
         this.data_list = this.get_data()
         this.print_blank_line()
         if (this.data_list.file_list != null) {
@@ -174,11 +219,11 @@ class FileFinder {
             console.log(chalk.redBright('\nError! File list is empty.'))
         }
         this.data_list.file_list_has_updated = false
-        this.set_data(this.data_list)
+        this.set_data(this.data_list)  // Update data file
         this.print_blank_line()
         console.log()
     }
 }
 
 
-module.exports = FileFinder
+module.exports = FileFinder  // export files finder class
