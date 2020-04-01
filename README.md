@@ -31,9 +31,9 @@
 ---
 
 ###   CLI Commands:
-   -   Get `where-is` help.
+   -   Get _where-is_ help.
        *  `wis --help|-h`
-   -   Get `where-is` version.
+   -   Get _where-is_ version.
        *  `wis --version|-V`
    -   Search for files from the current path.
        *  `wis find|f <file_name> [--strict|-S]`
@@ -52,5 +52,5 @@
     <img src="https://github.com/Ythosa/where-is/blob/master/docs/pres_strict_mode.png" alt="Finding files example">
     
    
-   -  File Open Example (file have opened in VS, becouse VS set as default): <br> <br>
+   -  File Open Example (file have opened in VS, because VS set as default): <br> <br>
     <img src="https://github.com/Ythosa/where-is/blob/master/docs/pres_take.png" alt="Finding files example">
