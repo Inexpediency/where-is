@@ -12,12 +12,11 @@
 </div>
 
 # Install
--   install [node.js](https://nodejs.org/en/) 
--   clone this repo: `git clone https://github.com/Ythosa/where-is`
--   install dependences by writing in console: `npm install`
--   setup module by writing in console: `npm link --force`
--   done, you can use it from your `cmd`
--   write in cmd: `wis help`
+-   Install [Node.js](https://nodejs.org/en/) 
+-   Clone this repo: `git clone https://github.com/Ythosa/where-is`
+-   Install dependences by writing in console: `npm install`
+-   Setup module by writing in console: `npm link --force`
+-   Done, you can use it from your `cmd`
 
 ---
 
@@ -32,6 +31,10 @@
 ---
 
 ###   CLI Commands:
+   -   Get `where-is` help.
+       *  `wis --help|-h`
+   -   Get `where-is` version.
+       *  `wis --version|-V`
    -   Search for files from the current path.
        *  `wis find|f <file_name> [--strict|-S]`
        *  `--strict|-S` flag carries out a strict search (full compliance found file name and `<file_name>`)
