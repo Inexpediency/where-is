@@ -15,6 +15,7 @@ class FileFinder {
         this.need_regex = false  // Need find with regexp
         this.regex = null  // RegExp to finding files
         this.strict_finding_mode = false  // Finding without strict mode
+        this.validstr = '[a-z|A-Z|0-9|_|.|*]*'
     }
 
     get_data() {
@@ -73,12 +74,12 @@ class FileFinder {
                         let file_name
                         if (this.strict_finding_mode) {
                             file_name = file_path.split('\\').pop()
-                            valid_re_str = fname.split('*')[0] + '[a-zA-Z0-9_]*'
+                            valid_re_str = fname.split('*')[0] + this.validstr
                             if (fname.split('*').length > 1) 
                                 valid_re_str += fname.split('*')[1]
                         } else {
                             file_name = file_path.toString().split('\\').pop()
-                            valid_re_str = fname.split('*')[0].toLowerCase() + '[a-zA-Z0-9_]*' + fname.split('*')[1].toLowerCase()
+                            valid_re_str = fname.split('*')[0].toLowerCase() + this.validstr + fname.split('*')[1].toLowerCase()
                         }
                         let re = new RegExp(valid_re_str)
                         this.regex = re

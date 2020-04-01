@@ -26,7 +26,7 @@ commander
     .option('-S,--strict', 'Strict finding files.')
     .alias('f')  // Short name of command
     .action((fname, cmd) => { // Action
-            let valid_file_name = /[a-zA-Z0-9_.*]+$/
+            let valid_file_name = /^[a-z|A-Z|0-9|_|.|*]+$/
             // Validation input string
             if (valid_file_name.test(fname)) {
                 if (fname.split('*').length > 2) {
