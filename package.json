@@ -8,7 +8,7 @@
     "commander": "^5.0.0",
     "inquirer": "^7.1.0"
   },
-  "description": "WheRe IS?!",
+  "description": "Command line interface to finding files.",
   "version": "1.0.1",
   "main": "app.js",
   "devDependencies": {},

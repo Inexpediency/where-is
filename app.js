@@ -1,14 +1,19 @@
 #!/usr/bin/env node  
     // indicates that processing should be carried out NodeJS
 
+/* -*- coding: utf-8 -*- */
+
+    /* author: Ythosa */
+    // cli label: Where-Is?
+    // cli command: wis
+
 // npm link --force   -   add module to cmd
-// wis   -   command name
   
 const commander = require('commander')
 const FileFinder = require('./findfile')
 const chalk = require('chalk')
 
-commander.version('1.0.0').description('Files finder from current path.')  // Util name and description
+commander.version('1.0.1').description('Files finder from current path.')  // Util name and description
 // wis --version|-V
 // wis --help|-h
 
@@ -22,13 +27,16 @@ commander
     .alias('f')  // Short name of command
     .action((fname, cmd) => { // Action
             let valid_file_name = /[a-zA-Z0-9_.*]+$/
+            // Validation input string
             if (valid_file_name.test(fname)) {
                 if (fname.split('*').length > 2) {
+                    // Throw Error
                     filefinder.print_blank_line()
                     console.log(chalk.redBright('\nError! Incorrect file name.'))
                     filefinder.print_blank_line()
                     console.log()
                 } else {
+                    // Check for strict searches
                     let strict_finding_mode = false
                     if (cmd.strict) {
                         strict_finding_mode = true
@@ -49,4 +57,4 @@ commander
         filefinder.goto_path(id)
     })
 
-commander.parse(process.argv)  // take array of string for parsing
+commander.parse(process.argv)  // Take array of string for parsing
