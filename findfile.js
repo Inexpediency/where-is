@@ -27,7 +27,7 @@ class FileFinder {
 
     set_data(data) {
         /* Save data in json file */
-        data = JSON.stringify(data)
+        data = JSON.stringify(data, null, '    ')
         fs.writeFileSync(`${__dirname}\\data.json`, data, "utf8")
     }
 
@@ -66,6 +66,7 @@ class FileFinder {
                             let file_name = file_path.toString().split('\\').pop().toLowerCase()
                             entries = file_name.split(fname.toLowerCase()).length - 1 // Number of entries
                         }
+                        // console.log(entries)
                         if (entries > 0) {
                             results.push(file_path)
                         }
@@ -152,7 +153,7 @@ class FileFinder {
         if (strict_finding_mode) this.strict_finding_mode = true
 
         let path = childProcess.execSync('echo %CD%').toString();  // Take current path
-        path = path.replace(/[\n, \r]/g, '')  // Remove other signs
+        path = path.slice(0, -2)  // Remove other signs
         fname = fname.toString().replace(/[\n, \r]/g, '')
 
         // Priniting results
