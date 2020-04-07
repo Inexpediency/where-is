@@ -234,7 +234,10 @@ class FileFinder {
                     console.log(chalk.greenBright(path))
                 } 
                 // Open this file
-                childProcess.execSync(`start ${path}`)  
+                if (! /[\r| ]/g.exec(path)) 
+                    childProcess.execSync(`start ${path}`)  
+                else 
+                    console.log(chalk.redBright('\nCan\'t open files which path has space.'))
             } else {
                 // Return Error
                 console.log(chalk.redBright('\nError! There is no such index.'))
