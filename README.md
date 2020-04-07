@@ -22,7 +22,9 @@
 
 # Description
 -    Command line interface to finding files
--    **Important** - `where-is` can't find files in close/private/system folders
+-    **Important**:
+      * `where-is` can't find files in close/private/system folders,
+      * `where-is` cannot `take` (run) files with spaces in paths.
 
 ---
 
