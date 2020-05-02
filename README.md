@@ -30,7 +30,6 @@
 
 # Docs
 
----
 
 ###   CLI Commands:
    -   Get _where-is_ help.
