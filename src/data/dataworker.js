@@ -1,7 +1,10 @@
+const Tokens = require('../libs/tokens')
+
 class DataWorker {
+
     get_data() {
         /* Get data from json file */
-        let data = fs.readFileSync(`${__dirname}\\data.json`, "utf8")
+        let data = fs.readFileSync(Tokens.data_path, "utf8")
         data = JSON.parse(data)
         return data
     }
@@ -9,8 +12,9 @@ class DataWorker {
     set_data(data) {
         /* Save data in json file */
         data = JSON.stringify(data, null, '    ')
-        fs.writeFileSync(`${__dirname}\\data.json`, data, "utf8")
+        fs.writeFileSync(Tokens.data_path, data, "utf8")
     }
+    
 }
 
 module.exports = DataWorker

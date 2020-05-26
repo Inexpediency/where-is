@@ -1,4 +1,7 @@
 const Tokens = {
+    
+    data_path = `${__dirname}\\data\\data.json`,  // Data file path
+
     max_file_list_length: 30,  // Max length of finded file list
     arr_of_colors: ['cyan', 'magenta', 'yellow'],  // Colors supported chalk module
 
@@ -9,6 +12,7 @@ const Tokens = {
 
     strict_finding_mode: false,  // Finding without strict mode
     valid_file_name: /^[\d|\w]+\.[a-zA-Z][a-zA-Z|\d]*$/,  // Valid file name
+
 }
 
 module.exports = Tokens
