@@ -11,13 +11,16 @@
   
 const commander = require('commander')
 const FileFinder = require('./libs/findfile')
-const Tokens = require('./libs/tokens')
+const Printer = require('./libs/printer')
+
+const tokens = require('./libs/tokens')
 
 commander.version('1.1.0').description('Files finder from current path.')  // Util name and description
 // wis --version|-V
 // wis --help|-h
 
-let filefinder = new FileFinder() 
+let filefinder = new FileFinder()
+let printer = new Printer(tokens.colors)
 
 // wis find|f [options:--strict|-S] <fname> 
 commander
@@ -27,8 +30,16 @@ commander
     .alias('f')  // Short name of command
     .action((fname, cmd) => { // Action
 
-        if (Tokens.valid_file_name.test(fname)) {
+        if (tokens.valid_file_name.test(fname)) {
             console.log('yep')
+            
+            let strict_mode = false
+            if (cmd.strict)
+                strict_mode = true
+
+            filefinder.get_similar_files(fname, strict_mode)
+        } else {
+            printer.print_error('Invalid file name')
         }
 
     })
@@ -38,7 +49,7 @@ commander
     .command('take <id>')
     .description('Go to file path with this id.')
     .alias('t')
-    .action((id, cmd) => {
+    .action((id) => {
         filefinder.goto_path(id)
     })
 
