@@ -2,7 +2,7 @@
   "name": "file-where-is",
   "preferGlobal": true,
   "bin": {
-    "wis": "app.js"
+    "wis": "src/app.js"
   },
   "dependencies": {
     "commander": "^5.0.0",
@@ -10,7 +10,7 @@
   },
   "description": "Command line interface to finding files.",
   "version": "1.0.1",
-  "main": "app.js",
+  "main": "src/app.js",
   "devDependencies": {},
   "scripts": {
     "test": "file-where-is"
