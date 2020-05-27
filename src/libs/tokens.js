@@ -1,9 +1,5 @@
 const tokens = {
 
-    // data_path = `${__dirname}\\data\\data.json`,  // Data file path
-
-    max_file_list_length: 30,  // Max length of finded file list
-
     // Colors to output a file lis
     colors: {
         file_list: [ 'cyan', 'magenta', 'yellow' ],

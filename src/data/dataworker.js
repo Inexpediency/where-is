@@ -14,6 +14,12 @@ class DataWorker {
         data = JSON.stringify(data, null, '    ')
         fs.writeFileSync(Tokens.data_path, data, "utf8")
     }
+
+    get_data_file_path() {
+        const data_path = `${__dirname}\\data\\data.json`  // Data file path
+
+        return data_path
+    }
     
 }
 

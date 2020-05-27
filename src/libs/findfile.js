@@ -13,7 +13,7 @@ class FileFinder {
     }
 
     get_similar_files(fname, strict_mode) {
-        const regex;
+        return 0
     }
 
 }
