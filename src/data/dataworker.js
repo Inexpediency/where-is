@@ -1,10 +1,12 @@
-const Tokens = require('../libs/tokens')
-
 class DataWorker {
+
+    constructor(df_path) {
+        this.data_file_path = df_path
+    }
 
     get_data() {
         /* Get data from json file */
-        let data = fs.readFileSync(Tokens.data_path, "utf8")
+        let data = fs.readFileSync(this.data_file_path, "utf8")
         data = JSON.parse(data)
         return data
     }
@@ -12,13 +14,7 @@ class DataWorker {
     set_data(data) {
         /* Save data in json file */
         data = JSON.stringify(data, null, '    ')
-        fs.writeFileSync(Tokens.data_path, data, "utf8")
-    }
-
-    get_data_file_path() {
-        const data_path = `${__dirname}\\data\\data.json`  // Data file path
-
-        return data_path
+        fs.writeFileSync(this.data_file_path, data, "utf8")
     }
     
 }

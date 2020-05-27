@@ -2,9 +2,10 @@ const chalk = require('chalk')
 
 class Printer {
 
-    constructor({ file_list, error }) {
+    constructor({ file_list, error, warning }) {
         this.file_list = file_list
         this.error = error
+        this.warning = warning
     }
 
     print_error(err) {
@@ -17,7 +18,6 @@ class Printer {
 
     blank_line_wrapper(str, fn) {
         const blank_line = this.blank_line_len_from_str(str)
-
         console.log()
         console.log(blank_line)
         fn()
@@ -30,6 +30,7 @@ class Printer {
             line.push('-')
         return line.join('')
     }
+
 }
 
 module.exports = Printer
