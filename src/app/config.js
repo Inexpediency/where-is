@@ -1,7 +1,7 @@
 const config = {
 
     dataList: {  // Data format
-        file_list_has_updated : null,
+        file_list_has_updated: false,
         file_list: []
     },
 
