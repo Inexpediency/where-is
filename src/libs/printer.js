@@ -11,16 +11,16 @@ class Printer {
     }
 
     printError(err) {
-        const str = `   Error: ` + err + `!   `
+        const str = `   Error: ` + err + `!`
         const toPrint = chalk[this.error](str)
 
         console.log()
         console.log(toPrint)
     }
 
-    printWarning(title, text) {
+    printWarning(title, text, other) {
         const t = `   Warning: ` + title + `!`
-        const toPrint = chalk[this.warning](`${t} ${text}.`)
+        const toPrint = chalk[this.warning](`${t} ${text}.${other}`)
 
         console.log()
         console.log(toPrint)
@@ -47,9 +47,10 @@ class Printer {
     }
 
     printSuccess(t) {
-        console.log()
+        const toPrint = `   ` + chalk[this.success](t)
 
-        console.log(chalk[this.success](t))
+        console.log()
+        console.log(toPrint)
     }
 
 }
