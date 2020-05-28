@@ -37,6 +37,7 @@ class Printer {
             process.stdout.write(chalk[pickedColor](path[0]))
             process.stdout.write(chalk[pickedColor].inverse(path[1]))
             process.stdout.write(chalk[pickedColor](path[2]))
+            process.stdout.write(chalk[pickedColor]('>'))
             console.log()
 
             if (c >= this.fileListColors.length - 1)
