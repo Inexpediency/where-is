@@ -109,7 +109,7 @@ class FileFinder {
         let files = this._findFiles(this.path, fname)
 
         if (files.length > config.maxFileListLength) {
-            printer.printWarning('Too many files found', 'Try to specify the file name more precisely')
+            printer.printWarning(`Too many files found: ${files.length}`, 'Try to specify the file name more precisely')
             return
         }
 

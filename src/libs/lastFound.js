@@ -19,7 +19,10 @@ class LastFound {
 
         dataWorker.setData(this.dataList)
 
-        printer.printFileList(file_list)
+        if (file_list.length)
+            printer.printFileList(file_list)
+        else
+            printer.printWarning('Last found file list is clear', 'Use <wis find|f> command to find files')
     }
 }
 

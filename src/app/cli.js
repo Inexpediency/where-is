@@ -1,7 +1,7 @@
 const FileFinder = require('../libs/findFile'),
       Printer = require('../libs/printer'),
       Checker = require('../libs/checker'),
-      gotoPath = require('../libs/gotoPath'),
+      GotoPath = require('../libs/gotoPath'),
       LastFound = require('../libs/lastFound'),
       config = require('./config')
 
@@ -55,11 +55,12 @@ const configGetLastFoundFiles = (cli) => {
 
 const configGotoPathCommand = (cli) => {
     // wis take|t <id>
-    cli.command('take <id>')
+    cli.command('goto <id>')
     .description('Go to file path with this id.')
-    .alias('t')
+    .alias('g')
     .action((id) => {
-        gotoPath(id)
+        const gotoPath = new GotoPath()
+        gotoPath.go(id)
     })
 
     return cli
