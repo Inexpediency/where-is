@@ -1,9 +1,10 @@
 const chalk = require('chalk')
 
+
 class Printer {
 
     constructor({ fileList, error, warning }) {
-        this.file_list = fileList
+        this.fileListColors = fileList
         this.error = error
         this.warning = warning
     }
@@ -11,24 +12,37 @@ class Printer {
     printError(err) {
         const str = `   Error: ` + err + `!   `
         const toPrint = chalk[this.error](str)
-        this.blankLineWrapper(str, () => {
-            console.log(toPrint)
-        })
+
+        console.log()
+        console.log(toPrint)
     }
 
-    blankLineWrapper(str, fn) {
-        const blankLine = this.blankLineLenFromStr(str)
+    printWarning(title, text) {
+        const t = `   Warning: ` + title + `!`
+        const toPrint = chalk[this.warning](`${t} ${text}.`)
+
         console.log()
-        console.log(blankLine)
-        fn()
-        console.log(blankLine)
+        console.log(toPrint)
     }
-    
-    blankLineLenFromStr(str) {
-        let line = []
-        for (let i = 0; i < str.length; i++)
-            line.push('-')
-        return line.join('')
+
+    printFileList(fileList) {
+        console.log()
+        let c = 0
+        for (let p in fileList) {
+            let path = fileList[p]
+            let pickedColor = this.fileListColors[c]
+
+            process.stdout.write(chalk[pickedColor](`[${p}] `))
+            process.stdout.write(chalk[pickedColor](path[0]))
+            process.stdout.write(chalk[pickedColor].inverse(path[1]))
+            process.stdout.write(chalk[pickedColor](path[2]))
+            console.log()
+
+            if (c >= this.fileListColors.length - 1)
+                c = 0
+            else
+                c++
+        }
     }
 
 }

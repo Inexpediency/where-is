@@ -2,13 +2,13 @@ const fs = require('fs')
 
 class DataWorker {
 
-    constructor(df_path) {
-        this.data_file_path = df_path
+    constructor() {
+        this.dataFilePath = this.getDataFilePath()
     }
 
     getData() {
         /* Get data from json file */
-        let data = fs.readFileSync(this.data_file_path, "utf8")
+        let data = fs.readFileSync(this.dataFilePath, 'utf8')
         data = JSON.parse(data)
         return data
     }
@@ -16,7 +16,11 @@ class DataWorker {
     setData(data) {
         /* Save data in json file */
         data = JSON.stringify(data, null, '    ')
-        fs.writeFileSync(this.data_file_path, data, "utf8")
+        fs.writeFileSync(this.dataFilePath, data, 'utf8')
+    }
+
+    getDataFilePath() {
+        return `${__dirname}\\data.json`  // Data file path
     }
     
 }

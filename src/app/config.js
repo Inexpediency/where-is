@@ -1,10 +1,8 @@
 const config = {
 
-    dataFilePath: `${__dirname}\\data\\data.json`,  // Data file path
-
     dataList: {  // Data format
-        file_list_has_updated : false,
-        file_list: null
+        file_list_has_updated : null,
+        file_list: []
     },
 
     maxFileListLength: 30,  // Max length of found file list

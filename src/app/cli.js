@@ -2,7 +2,9 @@ const FileFinder = require('../libs/findFile'),
       Printer = require('../libs/printer'),
       Checker = require('../libs/checker'),
       gotoPath = require('../libs/gotoPath'),
+      LastFound = require('../libs/lastFound'),
       config = require('./config')
+
 
 const configFindFileCommand = (cli) => {
     // wis find|f [options:--strict|-S] <fname> 
@@ -19,15 +21,12 @@ const configFindFileCommand = (cli) => {
             const { strict, startPath } = cmd
 
             let strict_mode = false
-            let path = ''
 
             if (strict)
                 strict_mode = true
 
             if (startPath)
-                if (checker.validatePath(startPath))
-                    path = startPath
-                else
+                if (!checker.validatePath(startPath))
                     printer.printError('Invalid start path')
 
             const fileFinder = new FileFinder(startPath)
@@ -37,6 +36,19 @@ const configFindFileCommand = (cli) => {
             printer.printError('Invalid file name')
         }
     })
+
+    return cli
+}
+
+const configGetLastFoundFiles = (cli) => {
+    // wis last|l
+    cli.command('last')  // Command name with props name
+        .description('Get last found files.')
+        .alias('l')
+        .action(() => {
+            const lastFound = new LastFound()
+            lastFound.get()
+        })
 
     return cli
 }
@@ -59,6 +71,7 @@ const configCLI = (cli) => {
     cli.version('1.1.0')
         .description('Files finder from current path.')  // Util name and description
 
+    cli = configGetLastFoundFiles(cli)
     cli = configFindFileCommand(cli)
     cli = configGotoPathCommand(cli)
 

@@ -1,4 +1,15 @@
 {
     "file_list_has_updated": true,
-    "file_list": null
+    "file_list": [
+        [
+            "E:\\_bigboi300\\Projects\\CLIs\\where-is\\src\\app\\cli",
+            ".js",
+            ""
+        ],
+        [
+            "E:\\_bigboi300\\Projects\\CLIs\\where-is\\src\\app\\config",
+            ".js",
+            ""
+        ]
+    ]
 }

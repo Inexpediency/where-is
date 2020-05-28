@@ -5,13 +5,13 @@ const DataWorker = require('../data/dataWorker'),
       fs = require('fs'),
       config = require('../app/config')
 
+
 class FileFinder {
 
     constructor(startPath) {
         this.strictMode = false  // Finding without strict mode
         this.dataList = config.dataList  // Init data list
         this.findFnameRegex = null
-        this.dataWorker = new DataWorker(config.dataFilePath)
         this.path = this._configPath(startPath)
     }
 
@@ -58,27 +58,27 @@ class FileFinder {
         return path
     }
 
-    _find_files(path, fname) {
-        let file_list = []
+    _findFiles(path, fname) {
+        let fileList = []
         let results = []
 
         try {
-            file_list = fs.readdirSync(path)
+            fileList = fs.readdirSync(path)
         } catch(err) {
             // printer.print_error("Wis can can't rean private/close/system folders")
             return results
         }
 
-        file_list.forEach((f) => {
-            let filePath = path + "\\" + f
+        fileList.forEach((f) => {
+            let filePath = path + '\\' + f
             let fileStat = fs.statSync(filePath)
             if (fileStat && fileStat.isDirectory())
-                results = results.concat(this._find_files(filePath, fname))
+                results = results.concat(this._findFiles(filePath, fname))
             else {
                 const match = f.match(this.findFnameRegex)
                 if (match) {
                     const pos = match.index
-                    results.push([f.slice(0, pos), f.slice(pos, pos + fname.length), f.slice(pos + fname.length)])
+                    results.push([path + '\\' + f.slice(0, pos), f.slice(pos, pos + fname.length), f.slice(pos + fname.length)])
                 }
             }
         })
@@ -96,6 +96,8 @@ class FileFinder {
     }
 
     getSimilarFiles(fname, strict_mode) {
+        const printer = new Printer(config.fileListColors)
+
         fname = fname.toString().replace(/[\n, \r]/g, '')
         this.strictMode = strict_mode
         
@@ -104,11 +106,22 @@ class FileFinder {
         else
             this.findFnameRegex = new RegExp(`${this._shieldingRegex(fname)}`)
 
-        const file_list = this._find_files(this.path, fname)
+        let files = this._findFiles(this.path, fname)
 
-        console.log(file_list)
-        
-        return 0
+        if (files.length > config.maxFileListLength) {
+            printer.printWarning('Too many files found', 'Try to specify the file name more precisely')
+            return
+        }
+
+        printer.printFileList(files)
+
+        this.dataList = {
+            file_list_has_updated: true,
+            file_list: files
+        }
+
+        const dataWorker = new DataWorker()
+        dataWorker.setData(this.dataList)
     }
 
 }
