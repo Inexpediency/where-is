@@ -10,7 +10,8 @@ const config = {
     fileListColors: {
         fileList: [ 'cyan', 'magenta', 'yellow' ],
         error: 'red',
-        warning: 'yellow'
+        warning: 'yellow',
+        success: 'green'
     },
 
     symbols2shielding: ['.', ':', '-', '?', '^', '$'],

@@ -1,4 +1,55 @@
 {
-    "file_list_has_updated" : false,
-    "file_list": []
+    "file_list": [
+        [
+            "E:\\_bigboi300\\Projects\\CLIs\\where-is\\src\\app\\cli",
+            ".js",
+            ""
+        ],
+        [
+            "E:\\_bigboi300\\Projects\\CLIs\\where-is\\src\\app\\config",
+            ".js",
+            ""
+        ],
+        [
+            "E:\\_bigboi300\\Projects\\CLIs\\where-is\\src\\app",
+            ".js",
+            ""
+        ],
+        [
+            "E:\\_bigboi300\\Projects\\CLIs\\where-is\\src\\data\\data",
+            ".js",
+            "on"
+        ],
+        [
+            "E:\\_bigboi300\\Projects\\CLIs\\where-is\\src\\data\\dataWorker",
+            ".js",
+            ""
+        ],
+        [
+            "E:\\_bigboi300\\Projects\\CLIs\\where-is\\src\\libs\\checker",
+            ".js",
+            ""
+        ],
+        [
+            "E:\\_bigboi300\\Projects\\CLIs\\where-is\\src\\libs\\findFile",
+            ".js",
+            ""
+        ],
+        [
+            "E:\\_bigboi300\\Projects\\CLIs\\where-is\\src\\libs\\gotoPath",
+            ".js",
+            ""
+        ],
+        [
+            "E:\\_bigboi300\\Projects\\CLIs\\where-is\\src\\libs\\lastFound",
+            ".js",
+            ""
+        ],
+        [
+            "E:\\_bigboi300\\Projects\\CLIs\\where-is\\src\\libs\\printer",
+            ".js",
+            ""
+        ]
+    ],
+    "file_list_has_updated": false
 }

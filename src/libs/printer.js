@@ -3,10 +3,11 @@ const chalk = require('chalk')
 
 class Printer {
 
-    constructor({ fileList, error, warning }) {
+    constructor({ fileList, error, warning, success }) {
         this.fileListColors = fileList
         this.error = error
         this.warning = warning
+        this.success = success
     }
 
     printError(err) {
@@ -43,6 +44,12 @@ class Printer {
             else
                 c++
         }
+    }
+
+    printSuccess(t) {
+        console.log()
+
+        console.log(chalk[this.success](t))
     }
 
 }
