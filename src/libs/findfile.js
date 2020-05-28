@@ -2,6 +2,7 @@ const DataWorker = require('../data/dataworker'),
       Checker = require('./checker'),
       Printer = require('./printer'),
       childProcess = require('child_process'),
+      fs = require('fs'),
       config = require('../app/config')
 
 class FileFinder {
@@ -15,6 +16,12 @@ class FileFinder {
     }
 
     config_path(start_path) {
+        if (!start_path) {
+            let path = childProcess.execSync('echo %CD%').toString();  // Take current path
+            path = path.replace(/[\n, \r]/g, '')  // Remove other signs
+            return path
+        }
+
         const checker = new Checker()
         if (checker.is_full_path(start_path))
             return start_path
@@ -22,7 +29,7 @@ class FileFinder {
         let path = childProcess.execSync('echo %CD%').toString();  // Take current path
         path = path.replace(/[\n, \r]/g, '')  // Remove other signs
 
-        let slash_type = '\\'
+        const slash_type = '\\'
 
         if (--start_path.split('/').length)
             start_path = start_path.replace(/\//g, slash_type)
@@ -44,83 +51,64 @@ class FileFinder {
         }
         
         path += slash_type + start_path
-        
+
+        if (path[path.length-1] === '\\')
+            path = path.slice(0, path.length-1)
+                
         return path
     }
 
-    // get_files(start_path, fname) {
-    //     /* Get files in this dir */
-    //     this.need_regex = false
-    //     if (fname.split('*').length > 1) {
-    //         this.need_regex = true
-    //     }
-    //     let results = []
-    //     let file_list = []
+    _find_files(path, fname) {
+        let file_list = []
+        let results = []
 
-    //     // Method fs.readdirSync() can't rean private/close/system folders
-    //     try {
-    //         file_list = fs.readdirSync(start_path)
-    //     }
-    //     catch(err) {
-    //         file_list = null
-    //     }
+        try {
+            file_list = fs.readdirSync(path)
+        } catch(err) {
+            // printer.print_error("Wis can can't rean private/close/system folders")
+            return results
+        }
 
-    //     // Recursive walk in dirs
-    //     if (file_list != null)
-    //         file_list.forEach((file) => {
-    //             let file_path = start_path + "\\" + file 
-    //             let file_stat = fs.statSync(file_path) 
-    //             if (file_stat && file_stat.isDirectory()) {
-    //                 // Find in this dir
-    //                 results = results.concat(this.get_files(file_path, fname))
-    //             } else {
-    //                 if (!this.need_regex) {
-    //                     let entries = 0
-    //                     if (this.strict_finding_mode) {
-    //                         let file_name = file_path.toString().split('\\').pop()
-    //                         entries = file_name.split(fname).length - 1 // Number of entries
-    //                     } else {
-    //                         let file_name = file_path.toString().split('\\').pop().toLowerCase()
-    //                         entries = file_name.split(fname.toLowerCase()).length - 1 // Number of entries
-    //                     }
-    //                     if (entries > 0) {
-    //                         results.push(file_path)
-    //                     }
-    //                 } else {
-    //                     let valid_re_str
-    //                     let file_name
-    //                     if (this.strict_finding_mode) {
-    //                         file_name = file_path.split('\\').pop()
-    //                         valid_re_str = fname.split('*')[0] + this.validstr
-    //                         if (fname.split('*').length > 1) 
-    //                             valid_re_str += fname.split('*')[1]
-    //                     } else {
-    //                         file_name = file_path.toString().split('\\').pop()
-    //                         valid_re_str = fname.split('*')[0].toLowerCase() + this.validstr + fname.split('*')[1].toLowerCase()
-    //                     }
-    //                     let re = new RegExp(valid_re_str)
-    //                     this.regex = re
-    //                     if (re.test(file_path)) {
-    //                         results.push(file_path)
-    //                     }
-    //                 }
-                        
-    //             }
-    //         })
-    //     return results  // Array of file's paths
-    // }
+        file_list.forEach((f) => {
+            let file_path = path + "\\" + f
+            let file_stat = fs.statSync(file_path) 
+            if (file_stat && file_stat.isDirectory())
+                results = results.concat(this._find_files(file_path, fname))
+            else {
+                const match = f.match(this.find_fname_regex)
+                if (match) {
+                    const pos = match.index
+                    results.push([f.slice(0, pos), f.slice(pos, pos + fname.length), f.slice(pos + fname.length)])
+                }
+            }
+        })
+
+        return results
+    }
+
+    _shielding_regex(r) {
+        const els2shielding = ['.', ':']
+        r = r.split('').map((el) => {
+            if (els2shielding.includes(el))
+                return `\\${el}`
+            return el
+        })
+        return r.join('')
+    }
 
     get_similar_files(fname, strict_mode) {
         fname = fname.toString().replace(/[\n, \r]/g, '')
         this.strict_mode = strict_mode
         
         if (this.strict_mode)
-            this.find_fname_regex = new RegExp(`^${fname}$`)
+            this.find_fname_regex = new RegExp(`^${this._shielding_regex(fname)}$`)
         else
-            this.find_fname_regex = new RegExp(`${fname}`)
-            
-        console.log(this.path)
+            this.find_fname_regex = new RegExp(`${this._shielding_regex(fname)}`)
 
+        const file_list = this._find_files(this.path, fname)
+
+        console.log(file_list)
+        
         return 0
     }
 
