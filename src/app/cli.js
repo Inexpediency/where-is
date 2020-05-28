@@ -30,7 +30,7 @@ const config_find_file_command = (cli) => {
                 else
                     printer.print_error('Invalid start path')
 
-            const filefinder = new FileFinder()
+            const filefinder = new FileFinder(startPath)
             
             filefinder.get_similar_files(fname, strict_mode)
         } else {
