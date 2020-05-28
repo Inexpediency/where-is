@@ -1,10 +1,10 @@
-const FileFinder = require('../libs/findfile'),
+const FileFinder = require('../libs/findFile'),
       Printer = require('../libs/printer'),
-      Checker = require('../libs/checker')
-      goto_path = require('../libs/goto_path'),
+      Checker = require('../libs/checker'),
+      gotoPath = require('../libs/gotoPath'),
       config = require('./config')
 
-const config_find_file_command = (cli) => {
+const configFindFileCommand = (cli) => {
     // wis find|f [options:--strict|-S] <fname> 
     cli.command('find <fname>')  // Command name with props name 
     .description('Search for a file from the current path.')
@@ -13,9 +13,9 @@ const config_find_file_command = (cli) => {
     .alias('f')  // Short name of command
     .action((fname, cmd) => { // Action
         const checker = new Checker()
-        const printer = new Printer(config.file_list_colors)
+        const printer = new Printer(config.fileListColors)
 
-        if (checker.validate_file_name(fname)) {
+        if (checker.validateFileName(fname)) {
             const { strict, startPath } = cmd
 
             let strict_mode = false
@@ -25,51 +25,51 @@ const config_find_file_command = (cli) => {
                 strict_mode = true
 
             if (startPath)
-                if (checker.validate_path(startPath))
+                if (checker.validatePath(startPath))
                     path = startPath
                 else
-                    printer.print_error('Invalid start path')
+                    printer.printError('Invalid start path')
 
-            const filefinder = new FileFinder(startPath)
+            const fileFinder = new FileFinder(startPath)
             
-            filefinder.get_similar_files(fname, strict_mode)
+            fileFinder.getSimilarFiles(fname, strict_mode)
         } else {
-            printer.print_error('Invalid file name')
+            printer.printError('Invalid file name')
         }
     })
 
     return cli
 }
 
-const config_goto_path_command = (cli) => {
+const configGotoPathCommand = (cli) => {
     // wis take|t <id>
     cli.command('take <id>')
     .description('Go to file path with this id.')
     .alias('t')
     .action((id) => {
-        goto_path(id)
+        gotoPath(id)
     })
 
     return cli
 }
 
-const config_cli = (cli) => {
+const configCLI = (cli) => {
     // wis --version|-V
     // wis --help|-h
     cli.version('1.1.0')
         .description('Files finder from current path.')  // Util name and description
-    
-    cll = config_find_file_command(cli)
-    cli = config_goto_path_command(cli)
+
+    cli = configFindFileCommand(cli)
+    cli = configGotoPathCommand(cli)
 
     return cli
 }
 
-const run = () => {
+const Run = () => {
     let commander = require('commander')
 
-    commander = config_cli(commander)
+    commander = configCLI(commander)
     commander.parse(process.argv)  // Take array of string for parsing
 }
 
-module.exports = run
+module.exports = Run

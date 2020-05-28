@@ -8,6 +8,6 @@
 
 // npm link --force   -   add module to cmd
 
-const app = require('./app/cli')
+const App = require('./app/cli')
 
-app()  // Run CLI application
+App()  // Run CLI application

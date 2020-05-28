@@ -2,29 +2,29 @@ const chalk = require('chalk')
 
 class Printer {
 
-    constructor({ file_list, error, warning }) {
-        this.file_list = file_list
+    constructor({ fileList, error, warning }) {
+        this.file_list = fileList
         this.error = error
         this.warning = warning
     }
 
-    print_error(err) {
+    printError(err) {
         const str = `   Error: ` + err + `!   `
-        const toprint = chalk[this.error](str)
-        this.blank_line_wrapper(str, () => {
-            console.log(toprint)
+        const toPrint = chalk[this.error](str)
+        this.blankLineWrapper(str, () => {
+            console.log(toPrint)
         })
     }
 
-    blank_line_wrapper(str, fn) {
-        const blank_line = this.blank_line_len_from_str(str)
+    blankLineWrapper(str, fn) {
+        const blankLine = this.blankLineLenFromStr(str)
         console.log()
-        console.log(blank_line)
+        console.log(blankLine)
         fn()
-        console.log(blank_line)
+        console.log(blankLine)
     }
     
-    blank_line_len_from_str(str) {
+    blankLineLenFromStr(str) {
         let line = []
         for (let i = 0; i < str.length; i++)
             line.push('-')
