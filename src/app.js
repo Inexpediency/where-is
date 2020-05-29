@@ -1,4 +1,4 @@
-#!/usr/bin/env node    // indicates that processing should be carried out NodeJS
+#!/usr/bin/env node
 
 /* -*- coding: utf-8 -*- */
 
@@ -8,6 +8,15 @@
 
 // npm link --force   -   add module to cmd
 
-const App = require('./app/cli')
+const configCLI = require('./configs/configCLI')
 
-App()  // Run CLI application
+const Run = () => {
+    let commander = require('commander')
+
+    // Config CLI commands
+    commander = configCLI(commander)
+    // Take array of string for parsing
+    commander.parse(process.argv)
+}
+
+Run()  // Run CLI application

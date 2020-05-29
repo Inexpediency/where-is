@@ -1,8 +1,8 @@
-const FileFinder = require('../libs/findFile'),
+const FileFinder = require('../cmds/findFile'),
       Printer = require('../libs/printer'),
       Checker = require('../libs/checker'),
-      GotoPath = require('../libs/gotoPath'),
-      LastFound = require('../libs/lastFound'),
+      GotoPath = require('../cmds/gotoPath'),
+      LastFound = require('../cmds/lastFound'),
       config = require('./config')
 
 
@@ -79,11 +79,4 @@ const configCLI = (cli) => {
     return cli
 }
 
-const Run = () => {
-    let commander = require('commander')
-
-    commander = configCLI(commander)
-    commander.parse(process.argv)  // Take array of string for parsing
-}
-
-module.exports = Run
+module.exports = configCLI

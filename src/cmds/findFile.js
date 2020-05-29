@@ -1,9 +1,10 @@
+const childProcess = require('child_process'),
+      fs = require('fs')
+
 const DataWorker = require('../data/dataWorker'),
-      Checker = require('./checker'),
-      Printer = require('./printer'),
-      childProcess = require('child_process'),
-      fs = require('fs'),
-      config = require('../app/config')
+      Checker = require('../libs/checker'),
+      Printer = require('../libs/printer'),
+      config = require('../configs/config')
 
 
 class FileFinder {
@@ -75,7 +76,13 @@ class FileFinder {
             if (fileStat && fileStat.isDirectory())
                 results = results.concat(this._findFiles(filePath, fname))
             else {
-                const match = f.match(this.findFnameRegex)
+                let match
+
+                if (this.strictMode)
+                    match = f.match(this.findFnameRegex)
+                else
+                    match = f.toLowerCase().match(this.findFnameRegex)
+
                 if (match) {
                     const pos = match.index
                     results.push([path + '\\' + f.slice(0, pos), f.slice(pos, pos + fname.length), f.slice(pos + fname.length)])
@@ -86,15 +93,6 @@ class FileFinder {
         return results
     }
 
-    _shieldingRegex(r) {
-        r = r.split('').map((el) => {
-            if (config.symbols2shielding.includes(el))
-                return `\\${el}`
-            return el
-        })
-        return r.join('')
-    }
-
     getSimilarFiles(fname, strict_mode) {
         const printer = new Printer(config.fileListColors)
 
@@ -102,9 +100,9 @@ class FileFinder {
         this.strictMode = strict_mode
         
         if (this.strictMode)
-            this.findFnameRegex = new RegExp(`^${this._shieldingRegex(fname)}$`)
+            this.findFnameRegex = new RegExp(`^${fname}$`)
         else
-            this.findFnameRegex = new RegExp(`${this._shieldingRegex(fname)}`)
+            this.findFnameRegex = new RegExp(`${fname}`)
 
         let files = this._findFiles(this.path, fname)
 

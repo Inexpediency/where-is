@@ -1,6 +1,6 @@
 const DataWorker = require('../data/dataWorker'),
       Printer = require('../libs/printer'),
-      config = require('../app/config')
+      config = require('../configs/config')
 
 class LastFound {
     constructor() {

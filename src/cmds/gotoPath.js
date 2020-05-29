@@ -1,8 +1,11 @@
+const childProcess = require('child_process'),
+      { prompt } = require('inquirer')
+
+
 const DataWorker = require('../data/dataWorker'),
       Printer = require('../libs/printer'),
-      childProcess = require('child_process'),
-      config = require('../app/config'),
-      { prompt } = require('inquirer')
+      config = require('../configs/config')
+
 
 class GotoPath {
     constructor() {

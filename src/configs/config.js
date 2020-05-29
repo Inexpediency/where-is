@@ -14,8 +14,6 @@ const config = {
         success: 'green'
     },
 
-    symbols2shielding: ['.', ':', '-', '?', '^', '$'],
-
 }
 
 module.exports = config

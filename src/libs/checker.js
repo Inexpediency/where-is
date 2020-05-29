@@ -1,13 +1,20 @@
 class Checker {
 
     constructor() {
-        this.fileName = /^[\d\w.]+$/  // Valid file name
         this.path = /^((((\.)|(\.\.))([\\/]))+|([A-Z]:([\\/]){2}))(.([\\/])?)*$/
         this.fullPathStarts = /^\w:/
     }
 
     validateFileName(fname) {
-        return this.fileName.test(fname)
+        let isValid = true
+
+        try {
+            const r = new RegExp(fname)
+        } catch {
+            isValid = false
+        }
+
+        return isValid
     }
 
     validatePath(path) {

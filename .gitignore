@@ -104,7 +104,7 @@ dist
 .tern-port
 
 # Data file
-/src/data/data.json
+src/data/data.json
 
 # IDE files
 .idea/
