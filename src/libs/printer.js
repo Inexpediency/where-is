@@ -54,6 +54,18 @@ class Printer {
         console.log(toPrint)
     }
 
+    printSimilarCommands(cmds) {
+        console.log()
+        if (cmds.length > 1)
+            console.log('The most similar commands are: ')
+        else
+            console.log('The most similar command is: ')
+
+        for (let c of cmds) {
+            console.log(`   wis ${c.cmd}|${c.alias} ${c.text}`)
+        }
+    }
+
 }
 
 module.exports = Printer

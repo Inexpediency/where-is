@@ -34,7 +34,7 @@ class GotoPath {
 
     go(id) {
         const dataWorker = new DataWorker()
-        const printer = new Printer(config.fileListColors)
+        const printer = new Printer(config.cliColors)
 
         this.dataList = dataWorker.getData()
 

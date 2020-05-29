@@ -94,7 +94,7 @@ class FileFinder {
     }
 
     getSimilarFiles(fname, strict_mode) {
-        const printer = new Printer(config.fileListColors)
+        const printer = new Printer(config.cliColors)
 
         fname = fname.toString().replace(/[\n, \r]/g, '')
         this.strictMode = strict_mode

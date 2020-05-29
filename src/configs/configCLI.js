@@ -5,37 +5,82 @@ const FileFinder = require('../cmds/findFile'),
       LastFound = require('../cmds/lastFound'),
       config = require('./config')
 
+const configUnknownCommand = (cli) => {
+    // wis error
+    cli._unknownCommand = (cmd) => {
+        const printer = new Printer(config.cliColors)
+        const checker = new Checker()
+
+        const commands = config.cliCommands
+
+        let thresholds = []
+        for (let c of commands) {
+            thresholds.push({
+                cmd: checker.levenshteinDistance(cmd, c.cmd),
+                alias: checker.levenshteinDistance(cmd, c.alias)
+            })
+        }
+
+        let minIdx = 0
+        for (let t in thresholds) {
+            if (thresholds[t].cmd < thresholds[minIdx].cmd)
+                minIdx = t
+        }
+
+        let minThresholdsCommands = []
+        for (let t in thresholds) {
+            if (thresholds[t].cmd === thresholds[minIdx].cmd) {
+                minThresholdsCommands.push({
+                    cmd: commands[t].cmd,
+                    alias: commands[t].alias,
+                    text: commands[t].text
+                })
+            }
+        }
+
+        cli.on('command:*', function (operands) {
+            console.error(`error: unknown command '${operands[0]}' 313123`);
+            // const availableCommands = program.commands.map(cmd => cmd.name());
+            // mySuggestBestMatch(operands[0], availableCommands);
+            process.exitCode = 1;
+        });
+
+        printer.printSimilarCommands(minThresholdsCommands)
+    }
+
+    return cli
+}
 
 const configFindFileCommand = (cli) => {
     // wis find|f [options:--strict|-S] <fname> 
     cli.command('find <fname>')  // Command name with props name 
-    .description('Search for a file from the current path.')
-    .option('-s,--strict', 'Strict finding files.')
-    .option('-p, --start-path <path>')
-    .alias('f')  // Short name of command
-    .action((fname, cmd) => { // Action
-        const checker = new Checker()
-        const printer = new Printer(config.fileListColors)
+        .description('Search for a file from the current path.')
+        .option('-s,--strict', 'Strict finding files.')
+        .option('-p, --start-path <path>')
+        .alias('f')  // Short name of command
+        .action((fname, cmd) => { // Action
+            const checker = new Checker()
+            const printer = new Printer(config.cliColors)
 
-        if (checker.validateFileName(fname)) {
-            const { strict, startPath } = cmd
+            if (checker.validateFileName(fname)) {
+                const { strict, startPath } = cmd
 
-            let strict_mode = false
+                let strict_mode = false
 
-            if (strict)
-                strict_mode = true
+                if (strict)
+                    strict_mode = true
 
-            if (startPath)
-                if (!checker.validatePath(startPath))
-                    printer.printError('Invalid start path')
+                if (startPath)
+                    if (!checker.validatePath(startPath))
+                        printer.printError('Invalid start path')
 
-            const fileFinder = new FileFinder(startPath)
-            
-            fileFinder.getSimilarFiles(fname, strict_mode)
-        } else {
-            printer.printError('Invalid file name')
-        }
-    })
+                const fileFinder = new FileFinder(startPath)
+
+                fileFinder.getSimilarFiles(fname, strict_mode)
+            } else {
+                printer.printError('Invalid file name')
+            }
+        })
 
     return cli
 }
@@ -56,12 +101,12 @@ const configGetLastFoundFiles = (cli) => {
 const configGotoPathCommand = (cli) => {
     // wis take|t <id>
     cli.command('goto <id>')
-    .description('Go to file path with this id.')
-    .alias('g')
-    .action((id) => {
-        const gotoPath = new GotoPath()
-        gotoPath.go(id)
-    })
+        .description('Go to file path with this id.')
+        .alias('g')
+        .action((id) => {
+            const gotoPath = new GotoPath()
+            gotoPath.go(id)
+        })
 
     return cli
 }
@@ -72,6 +117,10 @@ const configCLI = (cli) => {
     cli.version('1.1.0')
         .description('Files finder from current path.')  // Util name and description
 
+    cli.helpInformation = () => console.log(1)
+    cli.err
+
+    cli = configUnknownCommand(cli)
     cli = configGetLastFoundFiles(cli)
     cli = configFindFileCommand(cli)
     cli = configGotoPathCommand(cli)

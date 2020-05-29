@@ -10,7 +10,7 @@ class LastFound {
     get() {
         const dataWorker = new DataWorker()
         const { file_list } = dataWorker.getData()
-        const printer = new Printer(config.fileListColors)
+        const printer = new Printer(config.cliColors)
 
         this.dataList = {
             file_list_has_updated: true,

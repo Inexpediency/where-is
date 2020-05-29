@@ -13,10 +13,17 @@ const configCLI = require('./configs/configCLI')
 const Run = () => {
     let commander = require('commander')
 
-    // Config CLI commands
-    commander = configCLI(commander)
-    // Take array of string for parsing
-    commander.parse(process.argv)
+    commander = configCLI(commander) // Config CLI commands
+    commander.program.exitOverride()
+
+    try {
+        commander.parse(process.argv)  // Take array of string for parsing
+    } catch {
+        // Find similar functions
+        const cmd = process.argv[2]
+
+        commander._unknownCommand(cmd)
+    }
 }
 
 Run()  // Run CLI application

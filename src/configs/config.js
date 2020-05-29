@@ -1,5 +1,11 @@
 const config = {
 
+    cliCommands: [  // All custom supported CLI commands
+        { cmd: 'find', alias: 'f', text: '<fname>' },
+        { cmd: 'goto', alias: 'g', text: '' },
+        { cmd: 'last', alias: 'l', text: '<id>' }
+    ],
+
     dataList: {  // Data format
         file_list_has_updated: false,
         file_list: []
@@ -7,7 +13,7 @@ const config = {
 
     maxFileListLength: 30,  // Max length of found file list
 
-    fileListColors: {
+    cliColors: {  // Colors
         fileList: [ 'cyan', 'magenta', 'yellow' ],
         error: 'red',
         warning: 'yellow',
