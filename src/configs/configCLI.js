@@ -117,9 +117,6 @@ const configCLI = (cli) => {
     cli.version('1.1.0')
         .description('Files finder from current path.')  // Util name and description
 
-    cli.helpInformation = () => console.log(1)
-    cli.err
-
     cli = configUnknownCommand(cli)
     cli = configGetLastFoundFiles(cli)
     cli = configFindFileCommand(cli)

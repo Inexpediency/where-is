@@ -27,7 +27,11 @@ class Printer {
     }
 
     printFileList(fileList) {
-        console.log()
+
+        if (!fileList.length) {
+            this.printWarning('No files found', 'Try again', '')
+        }
+
         let c = 0
         for (let p in fileList) {
             let path = fileList[p]

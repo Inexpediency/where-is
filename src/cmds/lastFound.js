@@ -22,7 +22,10 @@ class LastFound {
         if (file_list.length)
             printer.printFileList(file_list)
         else
-            printer.printWarning('Last found file list is clear', 'Use <wis find|f> command to find files')
+            printer.printWarning(
+                'Last found file list is clear',
+                'Use <wis find|f> command to find files'
+            )
     }
 }
 
