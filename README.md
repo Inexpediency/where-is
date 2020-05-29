@@ -43,7 +43,6 @@
    -   Open file with `<id>` from found file list.
        *  `wis take|t <id>`
 
----
 
 ###   Using Examples:
    -  Finding Files Example: <br> <br>
