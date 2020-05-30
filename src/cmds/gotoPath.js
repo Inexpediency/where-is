@@ -26,7 +26,7 @@ class GotoPath {
 
             printer.printSuccess(`Opening file from path: ${path} ...`)
 
-            childProcess.execSync(`start ${path}`)
+            childProcess.execSync(`"${path}"`)
         } else {
             printer.printError('Invalid file ID from the file list')
         }
