@@ -1,4 +1,15 @@
 {
-    "file_list_has_updated": false,
-    "file_list": []
+    "file_list": [
+        [
+            "E:\\_bigboi300\\Books\\ProgLib\\Writing an interpreter in ",
+            "Go",
+            " by Thorsten Ball (z-lib.org).pdf"
+        ],
+        [
+            "E:\\_bigboi300\\Books\\ProgLib\\Язык программирования ",
+            "Go",
+            ". Алан А. А. Донован, Брайан У. Керниган.pdf"
+        ]
+    ],
+    "file_list_has_updated": false
 }
