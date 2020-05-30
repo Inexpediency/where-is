@@ -22,7 +22,7 @@ const Run = () => {
         // Find similar functions
         const cmd = process.argv[2]
 
-        commander._unknownCommand(cmd)
+        if (cmd) commander._unknownCommand(cmd)
     }
 }
 
