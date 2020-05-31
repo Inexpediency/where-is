@@ -1,45 +1,45 @@
+<br>
+
 <h1 align="center">Where-Is?</h1>
 <div align="center">
-  
 
-
-[![Badge](https://img.shields.io/badge/Uses-Node.js-green.svg?style=flat-square)](1)
-[![Badge](https://img.shields.io/badge/Open-Source-important.svg?style=flat-square)](1)
-[![Badge](https://img.shields.io/badge/Made_with-Love-ff69b4.svg?style=flat-square)](1)
+[![Badge](https://img.shields.io/badge/Uses-Node.js-green.svg?style=flat-square)]("NodeJS")
+[![Badge](https://img.shields.io/badge/Open-Source-important.svg?style=flat-square)]("OpenSource")
+[![Badge](https://img.shields.io/badge/Made_with-Love-ff69b4.svg?style=flat-square)]("MadeWithLove")
     
-
-
 </div>
 
 
 ## Install
 -   Install [Node.js](https://nodejs.org/en/) 
 -   Clone this repo: `git clone https://github.com/Ythosa/where-is`
--   Install dependences by writing in console: `npm install`
--   Setup module by writing in console: `npm link --force`
--   Done, you can use it from your `cmd`
-
+-   Install dependencies by writing in the console: `npm install`
+-   Setup module by writing in the console: `npm link --force`
+-   Done, you can use it from your `cmd` :3
 
 
 ## Description
 -    Command line interface to finding files
--    **Important**:
-      * `where-is` can't find files in close/private/system folders.
+-    Important: `where-is` can't find files in close/private/system folders.
 
 
 ## Docs
 
-
 ###   CLI Commands:
-   -   Get _where-is_ help.
+   -   Main CLI Command:
+       *   `wis`
+   -   Get help:
        *  `wis --help|-h`
-   -   Get _where-is_ version.
+   -   Get version:
        *  `wis --version|-V`
-   -   Search for files from the current path.
-       *  `wis find|f <file_name> [--strict|-S]`
-       *  `--strict|-s` flag carries out a strict search (full compliance found file name and `<file_name>`)
-   -   Open file with `<id>` from found file list.
-       *  `wis take|t <id>`
+   -   Search for files from the current path:
+       *  `wis find|f <file_name> [--path|-p <start_path>] [--strict|-p] [--help|-h]`
+       *  `--path|-p` flag allows you to start searching from a different folder and supports all possible paths;
+       *  `--strict|-s` flag carries out a strict search (full compliance found file name and `<file_name>`).
+   -   Get last found file list:
+          *  `wis last|l [--help|-h]`
+   -   Open file with `<id>` from found file list:
+       *  `wis goto|g <id> [--help|-h]`
 
 
 ###   Using Examples:
@@ -53,3 +53,16 @@
    
    -  File Open Example (file have opened in VS, because VS set as default): <br> <br>
     <img src="https://github.com/Ythosa/where-is/blob/master/assets/gotoAndLastCommandsExample.png" alt="Open file example">
+
+
+## FAQ
+*Q*: How can I get help on some command?  
+*A*: You can use command flag `--help|-h`, for example: `wis goto --help`
+
+*Q*: How can I help to develop this project?  
+*A*: You can put a :star: :3
+
+
+<div align="center">
+  Copyright 2020 Ythosa
+</div>
