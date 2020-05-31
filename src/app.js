@@ -22,7 +22,8 @@ const Run = () => {
         // Find similar functions
         const cmd = process.argv[2]
 
-        if (cmd) commander._unknownCommand(cmd)
+        if (cmd && cmd !== '-V' && cmd !== '--version' && cmd !== '-h' && cmd !== '--help')
+            commander._unknownCommand(cmd)
     }
 }
 
