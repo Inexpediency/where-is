@@ -66,7 +66,7 @@ class FileFinder {
         try {
             fileList = fs.readdirSync(path)
         } catch(err) {
-            // printer.print_error("Wis can can't rean private/close/system folders")
+            // printer.print_error("Wis can can't read private/close/system folders")
             return results
         }
 
@@ -102,7 +102,7 @@ class FileFinder {
         if (this.strictMode)
             this.findFnameRegex = new RegExp(`^${fname}$`)
         else
-            this.findFnameRegex = new RegExp(`${fname}`)
+            this.findFnameRegex = new RegExp(`${fname.toLowerCase()}`)
 
         let files = this._findFiles(this.path, fname)
 
