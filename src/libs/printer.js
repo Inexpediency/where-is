@@ -89,12 +89,14 @@ class Printer {
     }
 
     printPATHPrograms(programs) {
+        this.printSuccess('Some programs I was able to find in your PATH:\n')
+
         let i = 0
-        const maxlen = this._maxLength(programs)
+        const maxLen = this._maxLength(programs)
         while (i + 2 < programs.length) {
-            let p1 = chalk[this.fileListColors[0]](this._spaceCount(programs[i], maxlen))
-            let p2 = chalk[this.fileListColors[1]](this._spaceCount(programs[i+1], maxlen))
-            let p3 = chalk[this.fileListColors[2]](this._spaceCount(programs[i+2], maxlen))
+            let p1 = chalk[this.fileListColors[0]](this._spaceCount(programs[i], maxLen))
+            let p2 = chalk[this.fileListColors[1]](this._spaceCount(programs[i+1], maxLen))
+            let p3 = chalk[this.fileListColors[2]](this._spaceCount(programs[i+2], maxLen))
             console.log(
                 `${p1}     ${p2}     ${p3}`
             )
@@ -111,6 +113,12 @@ class Printer {
             }
             console.log(toPrint)
         }
+
+        this.printWarning(
+            'There may not be all programs here',
+            'For example, there are no standard applications here',
+            ' Such as: explorer, calc, code, etc...'
+        )
     }
 }
 
