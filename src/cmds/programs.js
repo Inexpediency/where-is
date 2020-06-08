@@ -16,20 +16,18 @@ class Programs {
         let prs = childProcess.execSync('path').toString()
         prs = this._formatPrograms(prs)
 
-        let path = []
+        let paths = []
         for (let p of prs) {
-            if (!/win/.test(p.toLowerCase())) {
+            if (!/win/.test(p.toLowerCase()) && !/nvidia/.test(p.toLowerCase())) {
                 try {
-                    path.push(...this._getApplicationsFromPath(p))
+                    paths.push(...this._getApplicationsFromPath(p))
                 } catch (e) {}
             }
         }
 
-        // console.log(path)
+        paths = new Set(paths.sort())
 
-        // console.log(this._getApplicationsFromPath(prs[0]))
-
-        // return prs
+        return paths
     }
 
     _formatPrograms(prs) {
@@ -39,18 +37,32 @@ class Programs {
     _getApplicationsFromPath(path) {
         let files = fs.readdirSync(path)
 
-
         files = files.filter((f) => {
             return (
-                !/win/.test(f.toLowerCase()) &&
                 f.slice(f.length - 4) === '.exe' &&
-                !/uninstall/.test(f.toLowerCase())
+                !/uninstall/.test(f.toLowerCase()) &&
+                !(f.split('-').length - 1) &&
+                !(f.split('_').length - 1) &&
+                !/restarter/.test(f.toLowerCase()) &&
+                !/elevator/.test(f.toLowerCase()) &&
+                !/launcher/.test(f.toLowerCase())
             )
         })
 
-        console.log(files)
+        files = files.map((f) => f.slice(0, f.length - 4))
 
-        return files[0]
+        let apps = files.slice()
+
+        for (let i in files) {
+            let r = new RegExp(files[i])
+            for (let j in files) {
+                if (i !== j && r.test(files[j])) {
+                    apps[j] = ''
+                }
+            }
+        }
+
+        return apps.filter(a => a)
     }
 }
 
