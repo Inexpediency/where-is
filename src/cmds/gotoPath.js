@@ -24,8 +24,6 @@ class GotoPath {
             }
             dataWorker.setData(this.dataList)
 
-
-
             if (program) {
                 printer.printSuccess(`Opening file from path: ${path} with ${program}...`)
                 try {

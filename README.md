@@ -37,10 +37,16 @@
        *  `--path|-p` flag allows you to start searching from a different folder and supports all possible paths;
        *  `--strict|-s` flag carries out a strict search (full compliance found file name and `<file_name>`).
    -   Get last found file list:
-          *  `wis last|l [--help|-h]`
+       *  `wis last|l [--help|-h]`
+   -   Get programs from PATH:
+       *  `wis programs|prs`
+       *  Important: There may not be all programs found. 
+       *  For example, there are no standard applications found such as: explorer, calc, code, etc...
    -   Open file with `<id>` from found file list:
-       *  `wis goto|g <id> [--help|-h]`
-
+       *  `wis goto|g <id> [--help|-h] [--withp|-w <program>] [--force]`
+       *  `--withp|-w` flag to open file with a program placed in the PATH;
+       *  `--force` flag to open file with disable the check of finding application in PATH.
+   
 
 ###   Using Examples:
    -  Finding Files Example: <br> <br>
