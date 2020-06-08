@@ -11,9 +11,7 @@
 <br>
 </div>
 
-> Latest version - 1.2.0
-<br>
-> Stable version - 1.1.0
+> Latest version - v1.2.0; Stable version - v1.1.0.
 
 ## Install
 -   Install [Node.js](https://nodejs.org/en/) 
