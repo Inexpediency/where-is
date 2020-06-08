@@ -14,17 +14,19 @@ const Run = () => {
     let commander = require('commander')
 
     commander = configCLI(commander) // Config CLI commands
-    commander.program.exitOverride()
+    // commander.program.exitOverride()
 
-    try {
+    // try {
         commander.parse(process.argv)  // Take array of string for parsing
-    } catch {
-        // Find similar functions
-        const cmd = process.argv[2]
-
-        if (cmd && cmd !== '-V' && cmd !== '--version' && cmd !== '-h' && cmd !== '--help')
-            commander._unknownCommand(cmd)
-    }
+    // } catch {
+    //     // Find similar functions
+    //     const cmd = process.argv[2]
+    //
+    //     const toSkipCmds = ['-V', '--version', '-h', '--help', 'help']
+    //
+    //     if (cmd && !toSkipCmds.includes(cmd))
+    //         commander._unknownCommand(cmd)
+    // }
 }
 
 Run()  // Run CLI application

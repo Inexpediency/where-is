@@ -3,7 +3,8 @@ const config = {
     cliCommands: [  // All custom supported CLI commands
         { cmd: 'find', alias: 'f', text: '<fname>' },
         { cmd: 'goto', alias: 'g', text: '' },
-        { cmd: 'last', alias: 'l', text: '<id>' }
+        { cmd: 'last', alias: 'l', text: '<id>' },
+        { cmd: 'programs', alias: 'prs', text: '' },
     ],
 
     dataList: {  // Data format

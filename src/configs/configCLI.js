@@ -3,6 +3,7 @@ const FileFinder = require('../cmds/findFile'),
       Checker = require('../libs/checker'),
       GotoPath = require('../cmds/gotoPath'),
       LastFound = require('../cmds/lastFound'),
+      Programs = require('../cmds/programs'),
       config = require('./config')
 
 const configUnknownCommand = (cli) => {
@@ -111,16 +112,29 @@ const configGotoPathCommand = (cli) => {
     return cli
 }
 
+const configGetPATHPrograms = (cli) => {
+    // wis programs|prs
+    cli.command('programs')
+        .description('Get all programs from PATH.')
+        .alias('prs')
+        .action((cmd) => {
+            const programs = new Programs()
+        })
+
+    return cli
+}
+
 const configCLI = (cli) => {
     // wis --version|-V
     // wis --help|-h
     cli.version('1.1.0')
-        .description('Files finder from current path.')  // Util name and description
+        .description('CLI for finding files.')
 
     cli = configUnknownCommand(cli)
     cli = configGetLastFoundFiles(cli)
     cli = configFindFileCommand(cli)
     cli = configGotoPathCommand(cli)
+    cli = configGetPATHPrograms(cli)
 
     return cli
 }

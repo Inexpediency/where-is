@@ -18,7 +18,7 @@ class FileFinder {
 
     _configPath(startPath) {
         if (!startPath) {
-            let path = childProcess.execSync('echo %CD%').toString();  // Take current path
+            let path = childProcess.execSync('echo %CD%').toString()  // Take current path
             path = path.replace(/[\n, \r]/g, '')  // Remove other signs
             return path
         }
@@ -27,7 +27,7 @@ class FileFinder {
         if (checker.isFullPath(startPath))
             return startPath
 
-        let path = childProcess.execSync('echo %CD%').toString();  // Take current path
+        let path = childProcess.execSync('echo %CD%').toString()  // Take current path
         path = path.replace(/[\n, \r]/g, '')  // Remove other signs
 
         const slash_type = '\\'
