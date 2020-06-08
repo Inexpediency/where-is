@@ -150,7 +150,7 @@ const configGetPATHPrograms = (cli) => {
 const configCLI = (cli) => {
     // wis --version|-V
     // wis --help|-h
-    cli.version('1.1.0')
+    cli.version('1.2.0')
         .description('CLI for finding files.')
 
     cli = configUnknownCommand(cli)

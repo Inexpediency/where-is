@@ -3,12 +3,17 @@
 <h1 align="center">Where-Is?</h1>
 <div align="center">
 
+
 [![Badge](https://img.shields.io/badge/Uses-Node.js-green.svg?style=flat-square)]("NodeJS")
 [![Badge](https://img.shields.io/badge/Open-Source-important.svg?style=flat-square)]("OpenSource")
 [![Badge](https://img.shields.io/badge/Made_with-Love-ff69b4.svg?style=flat-square)]("MadeWithLove")
-    
+
+<br>
 </div>
 
+> Latest version - 1.2.0
+<br>
+> Stable version - 1.1.0
 
 ## Install
 -   Install [Node.js](https://nodejs.org/en/) 
