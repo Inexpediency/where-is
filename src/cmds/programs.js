@@ -3,11 +3,11 @@ const childProcess = require('child_process'),
 
 class Programs {
     constructor() {
-        this.programs = this._getPATH()
+        this._programs = this._getPATH()
     }
 
     getPATHPrograms() {
-
+        return this._programs
     }
 
     _getPATH() {
@@ -27,7 +27,7 @@ class Programs {
 
         paths = new Set(paths.sort())
 
-        return paths
+        return Array.from(paths)
     }
 
     _formatPrograms(prs) {

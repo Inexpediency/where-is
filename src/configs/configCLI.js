@@ -119,6 +119,8 @@ const configGetPATHPrograms = (cli) => {
         .alias('prs')
         .action((cmd) => {
             const programs = new Programs()
+            const printer = new Printer(config.cliColors)
+            printer.printPATHPrograms(programs.getPATHPrograms())
         })
 
     return cli
