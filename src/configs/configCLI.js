@@ -103,10 +103,30 @@ const configGotoPathCommand = (cli) => {
     // wis take|t <id>
     cli.command('goto <id>')
         .description('Go to file path with this id.')
+        .option('-w, --withp <program>', 'Open file with program placed in PATH')
+        .option('--force', 'To disable the check of finding application in PATH')
         .alias('g')
-        .action((id) => {
+        .action((id, cmd) => {
+            const { withp, force } = cmd
+            const printer = new Printer(config.cliColors)
+            const programs = new Programs()
             const gotoPath = new GotoPath()
-            gotoPath.go(id)
+
+            if (force)
+                if (withp)
+                    gotoPath.go(id, withp, true)
+                else
+                    gotoPath.go(id)
+            else
+                if (withp)
+                    if (programs.isPATHProgramExist(withp))
+                        gotoPath.go(id, withp, false)
+                    else
+                        printer.printError(
+                            'I don\'t know such a program.' +
+                            ' Use --force flag to open without my checks')
+                else
+                    gotoPath.go(id)
         })
 
     return cli
@@ -125,6 +145,7 @@ const configGetPATHPrograms = (cli) => {
 
     return cli
 }
+
 
 const configCLI = (cli) => {
     // wis --version|-V

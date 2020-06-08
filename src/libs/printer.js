@@ -96,7 +96,7 @@ class Printer {
         while (i + 2 < programs.length) {
             let p1 = chalk[this.fileListColors[0]](this._spaceCount(programs[i], maxLen))
             let p2 = chalk[this.fileListColors[1]](this._spaceCount(programs[i+1], maxLen))
-            let p3 = chalk[this.fileListColors[2]](this._spaceCount(programs[i+2], maxLen))
+            let p3 = chalk[this.fileListColors[2]](programs[i+2])
             console.log(
                 `${p1}     ${p2}     ${p3}`
             )
@@ -108,7 +108,9 @@ class Printer {
             i = 0
             let toPrint = ''
             while (i < other) {
-                toPrint += chalk[this.fileListColors[i]](programs[programs.length - 1 + i]) + '\t'
+                toPrint += chalk[this.fileListColors[i]](
+                    this._spaceCount(programs[programs.length - 1 + i], maxLen)
+                )
                 i++
             }
             console.log(toPrint)

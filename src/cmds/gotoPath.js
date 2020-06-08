@@ -12,7 +12,7 @@ class GotoPath {
         this.dataList = config.dataList
     }
 
-    _openFile(printer, dataWorker, id) {
+    _openFile(printer, dataWorker, id, program) {
         const files = this.dataList.file_list
         let path
         if (id >= 0 && id <= files.length - 1) {
@@ -24,22 +24,32 @@ class GotoPath {
             }
             dataWorker.setData(this.dataList)
 
-            printer.printSuccess(`Opening file from path: ${path} ...`)
 
-            childProcess.execSync(`"${path}"`)
+
+            if (program) {
+                printer.printSuccess(`Opening file from path: ${path} with ${program}...`)
+                try {
+                    childProcess.execSync(`${program} "${path}"`)
+                } catch (e) {
+                    printer.printError('Such a program does not exist in PATH')
+                }
+            } else {
+                printer.printSuccess(`Opening file from path: ${path}...`)
+                childProcess.execSync(`"${path}"`)
+            }
         } else {
             printer.printError('Invalid file ID from the file list')
         }
     }
 
-    go(id) {
+    go(id, program=null) {
         const dataWorker = new DataWorker()
         const printer = new Printer(config.cliColors)
 
         this.dataList = dataWorker.getData()
 
         if (this.dataList.file_list_has_updated) {
-            this._openFile(printer, dataWorker, id)
+            this._openFile(printer, dataWorker, id, program)
         } else {
             printer.printWarning(
                 'You should update file list',
@@ -56,7 +66,7 @@ class GotoPath {
                 ]
             ).then(({ confirm }) => {
                 if (confirm)
-                    this._openFile(printer, dataWorker, id)
+                    this._openFile(printer, dataWorker, id, program)
             })
         }
     }

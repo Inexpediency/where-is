@@ -1,15 +1,60 @@
 {
-    "file_list_has_updated": true,
     "file_list": [
         [
-            "Y:\\_Ythosa\\Books\\ProgLib\\Writing an interpreter in ",
-            "Go",
-            " by Thorsten Ball (z-lib.org).pdf"
+            "Y:\\_Ythosa\\Projects\\CLIs\\where-is\\src\\app",
+            ".js",
+            ""
         ],
         [
-            "Y:\\_Ythosa\\Books\\ProgLib\\Язык программирования ",
-            "Go",
-            ". Алан А. А. Донован, Брайан У. Керниган.pdf"
+            "Y:\\_Ythosa\\Projects\\CLIs\\where-is\\src\\cmds\\findFile",
+            ".js",
+            ""
+        ],
+        [
+            "Y:\\_Ythosa\\Projects\\CLIs\\where-is\\src\\cmds\\gotoPath",
+            ".js",
+            ""
+        ],
+        [
+            "Y:\\_Ythosa\\Projects\\CLIs\\where-is\\src\\cmds\\lastFound",
+            ".js",
+            ""
+        ],
+        [
+            "Y:\\_Ythosa\\Projects\\CLIs\\where-is\\src\\cmds\\programs",
+            ".js",
+            ""
+        ],
+        [
+            "Y:\\_Ythosa\\Projects\\CLIs\\where-is\\src\\configs\\config",
+            ".js",
+            ""
+        ],
+        [
+            "Y:\\_Ythosa\\Projects\\CLIs\\where-is\\src\\configs\\configCLI",
+            ".js",
+            ""
+        ],
+        [
+            "Y:\\_Ythosa\\Projects\\CLIs\\where-is\\src\\data\\data",
+            ".js",
+            "on"
+        ],
+        [
+            "Y:\\_Ythosa\\Projects\\CLIs\\where-is\\src\\data\\dataWorker",
+            ".js",
+            ""
+        ],
+        [
+            "Y:\\_Ythosa\\Projects\\CLIs\\where-is\\src\\libs\\checker",
+            ".js",
+            ""
+        ],
+        [
+            "Y:\\_Ythosa\\Projects\\CLIs\\where-is\\src\\libs\\printer",
+            ".js",
+            ""
         ]
-    ]
+    ],
+    "file_list_has_updated": false
 }

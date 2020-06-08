@@ -64,6 +64,10 @@ class Programs {
 
         return apps.filter(a => a)
     }
+
+    isPATHProgramExist(name) {
+        return this.getPATHPrograms().includes(name.trim())
+    }
 }
 
 module.exports = Programs
