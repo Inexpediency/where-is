@@ -11,7 +11,6 @@ class FileFinder {
 
     constructor(startPath) {
         this.strictMode = false  // Finding without strict mode
-        this.dataList = config.dataList  // Init data list
         this.findFnameRegex = null
         this.path = this._configPath(startPath)
     }
@@ -113,13 +112,9 @@ class FileFinder {
 
         printer.printFileList(files)
 
-        this.dataList = {
-            file_list_has_updated: true,
-            file_list: files
-        }
-
         const dataWorker = new DataWorker()
-        dataWorker._setData(this.dataList)
+        dataWorker.setIsFileListUpdated(true)
+        dataWorker.setFileList(files)
     }
 
 }

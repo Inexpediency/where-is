@@ -8,21 +8,14 @@ const DataWorker = require('../data/dataWorker'),
 
 
 class GotoPath {
-    constructor() {
-        this.dataList = config.dataList
-    }
 
     _openFile(printer, dataWorker, id, program) {
-        const files = this.dataList.file_list
+        const files = dataWorker.getFileList()
         let path
         if (id >= 0 && id <= files.length - 1) {
             path = files[id].join('')
 
-            this.dataList = {
-                file_list: files,
-                file_list_has_updated: false
-            }
-            dataWorker.setData(this.dataList)
+            dataWorker.setIsFileListUpdated(false)
 
             if (program) {
                 printer.printSuccess(`Opening file from path: ${path} with ${program}...`)
@@ -35,6 +28,8 @@ class GotoPath {
                 printer.printSuccess(`Opening file from path: ${path}...`)
                 childProcess.execSync(`"${path}"`)
             }
+
+            dataWorker.setLastGotoPath(path)
         } else {
             printer.printError('Invalid file ID from the file list')
         }
@@ -44,9 +39,9 @@ class GotoPath {
         const dataWorker = new DataWorker()
         const printer = new Printer(config.cliColors)
 
-        this.dataList = dataWorker._getData()
+        const fileListUpdated = dataWorker.getIsFileListUpdated()
 
-        if (this.dataList.file_list_has_updated) {
+        if (fileListUpdated) {
             this._openFile(printer, dataWorker, id, program)
         } else {
             printer.printWarning(

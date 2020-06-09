@@ -38,7 +38,7 @@ class DataWorker {
     setLastGotoPath(path) {
         let data = this._getData()
         data.last_goto_path = path
-        this._setData(path)
+        this._setData(data)
     }
 
     _getData() {

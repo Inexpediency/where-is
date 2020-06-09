@@ -8,8 +8,9 @@ const config = {
     ],
 
     dataList: {  // Data format
-        file_list_has_updated: false,
-        file_list: []
+        file_list_has_updated: false,  // Is file list updated - bool
+        file_list: [],  // List of paths to found files
+        last_goto_path: ''  // Path to last goto file
     },
 
     maxFileListLength: 30,  // Max length of found file list
