@@ -47,9 +47,11 @@
        *  For example, there are no standard applications found such as: explorer, calc, code, etc...
    -   Open file with `<id>` from found file list:
        *  `wis goto|g <id> [--help|-h] [--withp|-w <program>] [--force]`
+       *  `<id>` can be `last` - go to last taken file or index of path in file list found by `wis`
        *  `--withp|-w` flag to open file with a program placed in the PATH;
        *  `--force` flag to open file with disable the check of finding application in PATH.
-   
+   -   Get last taken file path:
+       *  `wis lastgoto|lg [--help|-h]`
 
 ###   Using Examples:
    -  Finding Files Example: <br> <br>

@@ -12,8 +12,17 @@ class GotoPath {
     _openFile(printer, dataWorker, id, program) {
         const files = dataWorker.getFileList()
         let path
-        if (id >= 0 && id <= files.length - 1) {
-            path = files[id].join('')
+        if ((id >= 0 && id <= files.length - 1) || (id === 'last')) {
+            if (id === 'last')
+                if (dataWorker.getLastGotoPath()) {
+                    path = dataWorker.getLastGotoPath()
+                }
+                else {
+                    printer.printError('Your last goto path is empty')
+                    return
+                }
+            else
+                path = files[id].join('')
 
             dataWorker.setIsFileListUpdated(false)
 
@@ -22,7 +31,7 @@ class GotoPath {
                 try {
                     childProcess.execSync(`${program} "${path}"`)
                 } catch (e) {
-                    printer.printError('Such a program does not exist in PATH')
+                    printer.printError('Such a program does not exist in PATH or there was some error')
                 }
             } else {
                 printer.printSuccess(`Opening file from path: ${path}...`)
