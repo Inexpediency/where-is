@@ -9,7 +9,7 @@ class LastFound {
 
     get() {
         const dataWorker = new DataWorker()
-        const { file_list } = dataWorker.getData()
+        const { file_list } = dataWorker._getData()
         const printer = new Printer(config.cliColors)
 
         this.dataList = {
@@ -17,7 +17,7 @@ class LastFound {
             file_list: file_list
         }
 
-        dataWorker.setData(this.dataList)
+        dataWorker._setData(this.dataList)
 
         if (file_list.length)
             printer.printFileList(file_list)

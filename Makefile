@@ -8,6 +8,6 @@ dependencies:
 
 .PHONY: data
 data:
-	git update-index --assume-unchanged data/data.json
+	git update-index --assume-unchanged src/data/data.json
 
 .DEFAULT_GOAL := setup

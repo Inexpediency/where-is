@@ -44,7 +44,7 @@ class GotoPath {
         const dataWorker = new DataWorker()
         const printer = new Printer(config.cliColors)
 
-        this.dataList = dataWorker.getData()
+        this.dataList = dataWorker._getData()
 
         if (this.dataList.file_list_has_updated) {
             this._openFile(printer, dataWorker, id, program)

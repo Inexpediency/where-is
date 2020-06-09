@@ -119,7 +119,7 @@ class FileFinder {
         }
 
         const dataWorker = new DataWorker()
-        dataWorker.setData(this.dataList)
+        dataWorker._setData(this.dataList)
     }
 
 }
