@@ -137,10 +137,23 @@ const configGetPATHPrograms = (cli) => {
     cli.command('programs')
         .description('Get all programs from PATH.')
         .alias('prs')
-        .action((cmd) => {
+        .action(() => {
             const programs = new Programs()
             const printer = new Printer(config.cliColors)
             printer.printPATHPrograms(programs.getPATHPrograms())
+        })
+
+    return cli
+}
+
+const configGetLastGotoFile = (cli) => {
+    // wis lastgoto|lg
+    cli.command('lastgoto')
+        .description('Get last goto file path.')
+        .alias('lg')
+        .action(() => {
+            const gotoPath = new GotoPath()
+            gotoPath.getLastGotoPath()
         })
 
     return cli
@@ -150,7 +163,7 @@ const configGetPATHPrograms = (cli) => {
 const configCLI = (cli) => {
     // wis --version|-V
     // wis --help|-h
-    cli.version('1.2.0')
+    cli.version('1.2.1')
         .description('CLI for finding files.')
 
     cli = configUnknownCommand(cli)
@@ -158,6 +171,7 @@ const configCLI = (cli) => {
     cli = configFindFileCommand(cli)
     cli = configGotoPathCommand(cli)
     cli = configGetPATHPrograms(cli)
+    cli = configGetLastGotoFile(cli)
 
     return cli
 }

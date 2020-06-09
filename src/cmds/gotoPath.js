@@ -63,6 +63,21 @@ class GotoPath {
             })
         }
     }
+
+    getLastGotoPath() {
+        const printer = new Printer(config.cliColors)
+        const dataWorker = new DataWorker()
+        const lastGotoPath = dataWorker.getLastGotoPath()
+
+        if (lastGotoPath)
+            printer.printSuccess(`Last goto path: ${lastGotoPath}`)
+        else
+            printer.printWarning(
+                'Your last goto path is empty',
+                'Use <wis goto|g> to open some file',
+                ''
+            )
+    }
 }
 
 module.exports = GotoPath
