@@ -1,7 +1,7 @@
 class Checker {
 
     constructor() {
-        this.path = /^((((\.)|(\.\.))([\\/]))+|([A-Z]:([\\/]){2}))(.([\\/])?)*$/
+        this.path = /^((((\.)|(\.\.))([\\/]))+|([A-Z]:([\\/])))(.([\\/])?)*$/
         this.fullPathStarts = /^\w:/
     }
 

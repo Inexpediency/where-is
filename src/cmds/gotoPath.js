@@ -29,13 +29,13 @@ class GotoPath {
             if (program) {
                 printer.printSuccess(`Opening file from path: ${path} with ${program}...`)
                 try {
-                    childProcess.execSync(`${program} "${path}"`)
+                    childProcess.execSync(`${program} "${path}"`, { timeout:3000 })
                 } catch (e) {
                     printer.printError('Such a program does not exist in PATH or there was some error')
                 }
             } else {
                 printer.printSuccess(`Opening file from path: ${path}...`)
-                childProcess.execSync(`"${path}"`)
+                childProcess.exec(`"${path}"`, { timeout:3000 })
             }
 
             dataWorker.setLastGotoPath(path)
