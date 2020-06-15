@@ -7,7 +7,7 @@ const FileFinder = require('../cmds/findFile'),
       config = require('./config')
 
 const configUnknownCommand = (cli) => {
-    // wis error
+    // wis error - unknown command entered
     cli._unknownCommand = (cmd) => {
         const printer = new Printer(config.cliColors)
         const checker = new Checker()
@@ -38,13 +38,6 @@ const configUnknownCommand = (cli) => {
                 })
             }
         }
-
-        cli.on('command:*', function (operands) {
-            console.error(`error: unknown command '${operands[0]}' 313123`);
-            // const availableCommands = program.commands.map(cmd => cmd.name());
-            // mySuggestBestMatch(operands[0], availableCommands);
-            process.exitCode = 1;
-        });
 
         printer.printSimilarCommands(minThresholdsCommands)
     }
@@ -163,7 +156,7 @@ const configGetLastGotoFile = (cli) => {
 const configCLI = (cli) => {
     // wis --version|-V
     // wis --help|-h
-    cli.version('1.2.1')
+    cli.version('1.2.2')
         .description('CLI for finding files.')
 
     cli = configUnknownCommand(cli)

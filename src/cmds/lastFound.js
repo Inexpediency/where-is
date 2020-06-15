@@ -11,13 +11,16 @@ class LastFound {
         const files = dataWorker.getFileList()
         dataWorker.setIsFileListUpdated(true)
 
-        if (files.length)
+        if (files.length) {
             printer.printFileList(files)
-        else
-            printer.printWarning(
-                'Last found file list is clear',
-                'Use <wis find|f> command to find files'
-            )
+            return
+        }
+
+        printer.printWarning(
+            'Last found file list is clear',
+            'Use <wis find|f> command to find files',
+            ''
+        )
     }
 
 }
