@@ -62,7 +62,7 @@
     <img src="https://github.com/Ythosa/where-is/blob/master/assets/strictModeExample.png" alt="Using strict mode example">
     
    
-   -  File Open Example (file have opened in VS, because VS set as default): <br> <br>
+   -  File Open Example (file have opened in Visual Studio Code, because it sets as default): <br> <br>
     <img src="https://github.com/Ythosa/where-is/blob/master/assets/gotoAndLastCommandsExample.png" alt="Open file example">
 
 
